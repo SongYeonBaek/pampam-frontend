@@ -26,6 +26,20 @@
       <br>
 
       <form id="signupForm">
+        <div class="insertImg">
+          <h5>회원 사진</h5>
+          <div class="seller-img">
+            <div>
+            <span class="seller-img-input-info">
+              버튼을 클릭하여 사진을 업로드 해주세요. <br>
+              (프로필 사진은 한 장만 가능합니다.)
+            </span>
+              <div class="file-input-btn">
+                <v-file-input v-model="file" base-color="white" bg-color="#18cc3c" clearable label="PC에서 불러오기" variant="solo-filled"></v-file-input>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="insertEmail"><h5>이메일</h5></div>
         <input v-model="member.email" type="email" placeholder="이메일" autofocus required>
         <br>
@@ -42,11 +56,15 @@
         <input v-model="member.consumerPhoneNum" type="tel" placeholder="전화번호 입력('-'도 포함해서 입력해주세요.)" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" required>
         <br>
 
-        <div class="insertnick"><h5>회원 이름</h5></div>
+        <div class="insertnick"><h5> 이름</h5></div>
         <div class="insertnick2">최소 2자에서 최대 20자까지 가능합니다.</div>
         <input v-model="member.consumerName" type="text" placeholder="이름 (2~20자)" required>
         <br>
 
+        <div class="insertnick"><h5>주소</h5></div>
+        <div class="insertnick2">원활한 배송을 위해 주소를 정확하게 기입해주세요. (10자)</div>
+        <input v-model="member.consumerAddr" type="text" placeholder="주소를 한글로 입력해주세요" id="주소" pattern="[0-9]{3}-{2}-{5}" required>
+        <br>
         <div class="consent-container">
           <label class="consent-label"><h5>약관동의</h5></label>
           <div class="consent-options">
@@ -125,7 +143,6 @@
 <script>
 
 import axios from "axios";
-const backend = "http://www.localfoodpam.kro.kr/co"
 
 export default {
   name: 'SignUpPage',
@@ -133,17 +150,26 @@ export default {
     return {
       member: {
         email: "",
-        password: "",
+        consumerPW: "",
         consumerName:"",
+        consumerAddr:"",
         consumerPhoneNum: ""
-      }
+      },
+      file: ""
     }
   },
   methods: {
     async signUp() {
-      let response = await axios.post( backend + "/member/signup",
-          this.member
-      )
+      const formData = new FormData();
+      formData.append("memberSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
+      formData.append("profileImage", this.file[0]);
+
+      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/consumer/signup", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log(response);
 
       if (response.data.code === 1000) {
         alert("회원가입 성공")
