@@ -63,14 +63,12 @@ export default {
         password: member.password,
       }
 
-      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/seller/login", data);
+      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/seller/login", data);
       console.log(response);
 
-      localStorage.setItem("accessToken", "Bearer " + response.data.result);
+      localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
 
-      window.location.href = process.env.VUE_APP_ENDPOINT
-
-
+      window.location.href = "http://localhost:3000"
     }
   }
 }
