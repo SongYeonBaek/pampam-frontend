@@ -72,7 +72,7 @@
               <label class="checkbox-label">
                 <div class="checkbox-wrapper">
                   <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agreeAll" class="checkbox-input">
+                  <input type="checkbox" v-model="agreeAll" @change="toggleAll" class="checkbox-input">
                 </div>
                 <span class="consent-text">
                     <h4>전체동의<span class="additional-consent"> &nbsp; 선택항목에 대한 동의 포함</span></h4>
@@ -80,53 +80,14 @@
               </label>
             </div>
             <hr class="consent-divider">
-            <div class="consent-option">
+            <div class="consent-option" v-for="(consent, index) in consents" :key="index">
               <label class="checkbox-label">
                 <div class="checkbox-wrapper">
                   <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agree1" class="checkbox-input">
+                  <input type="checkbox" v-model="consent.checked" @change="checkAll" class="checkbox-input">
                 </div>
-                <span class="consent-text" required>만 14세 이상입니다 (필수)</span>
-              </label>
-            </div>
-            <div class="consent-option">
-              <label class="checkbox-label">
-                <div class="checkbox-wrapper">
-                  <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agree2" class="checkbox-input">
-                </div>
-                <span class="consent-text" required>이용약관 (필수)</span>
-                <a target="_blank" href="/usepolicy" class="external-link"><span class="_chevron_right_18"></span></a>
-              </label>
-            </div>
-            <div class="consent-option">
-              <label class="checkbox-label">
-                <div class="checkbox-wrapper">
-                  <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agree3" class="checkbox-input">
-                </div>
-                <span class="consent-text" required>개인정보수집 및 이용동의 (필수)</span>
-                <a target="_blank" href="/privacy?type=register" class="external-link"><span class="_chevron_right_18"></span></a>
-              </label>
-            </div>
-            <div class="consent-option">
-              <label class="checkbox-label">
-                <div class="checkbox-wrapper">
-                  <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agreeMarketUsage" class="checkbox-input">
-                </div>
-                <span class="consent-text">개인정보 마케팅 활용 동의 (선택)</span>
-                <a target="_blank" href="/privacy?type=register_marketing" class="external-link"><span class="_chevron_right_18"></span></a>
-              </label>
-            </div>
-            <div class="consent-option">
-              <label class="checkbox-label">
-                <div class="checkbox-wrapper">
-                  <div class="check-icon"><span class="_check_12"></span></div>
-                  <input type="checkbox" value="false" field="[object Object]" name="agreePromotion" class="checkbox-input">
-                </div>
-                <span class="consent-text">이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신 (선택)
-                    <div class="selection"></div></span>
+                <span class="consent-text" :required="consent.required">{{ consent.text }}</span>
+                <a v-if="consent.link" :href="consent.link" target="_blank" class="external-link"><span class="_chevron_right_18"></span></a>
               </label>
             </div>
           </div>
@@ -141,7 +102,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -155,7 +115,15 @@ export default {
         consumerAddr:"",
         consumerPhoneNum: ""
       },
-      file: ""
+      file: "",
+      agreeAll: false,
+      consents: [
+        { text: '만 14세 이상입니다 (필수)', required: true, checked: false },
+        { text: '이용약관 (필수)', required: true, checked: false, link: '/usepolicy' },
+        { text: '개인정보수집 및 이용동의 (필수)', required: true, checked: false, link: '/privacy?type=register' },
+        { text: '개인정보 마케팅 활용 동의 (선택)', required: false, checked: false, link: '/privacy?type=register_marketing' },
+        { text: '이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신 (선택)', required: false, checked: false }
+      ]
     }
   },
   methods: {
@@ -173,15 +141,31 @@ export default {
 
       if (response.data.code === 1000) {
         alert("회원가입 성공")
-        window.location.href = "http://localhost:8080"
+        window.location.href = "http://localhost:3000"
       }
 
       if (response.data.code === 3000) {
         alert("회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요")
       }
-}
+    },
+    toggleAll() {
+      const newValue = this.agreeAll;
+      this.consents.forEach(consent => {
+        consent.checked = newValue;
+      });
+    },
+    checkAll() {
+      this.agreeAll = this.consents.every(consent => consent.checked);
+    }
   },
-  components: {},
+  watch: {
+    consents: {
+      handler() {
+        this.agreeAll = this.consents.every(consent => consent.checked);
+      },
+      deep: true
+    }
+  }
 }
 </script>
 
@@ -219,251 +203,55 @@ export default {
   url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.ttf') format("truetype");
   font-display: swap;
 }
-
-*{
-  font-family: 'GmarketSans';
-}
-
-body {
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin-bottom: 50px;
-  width: 100%;
-}
-
-.signup-content {
-  justify-content: center;
-  display: flex;
-}
-
-.signup-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  width: 40%;
-  text-align: center;
-  margin-top: 20px; /* 이미지와 로고에 겹치지 않도록 여백 추가 */
-}
-
-.text-with-image {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0px;
-  text-align: center;
-  top: 15px; /* 화면 상단에 정렬 */
-  left: 10px; /* 화면 왼쪽에 정렬 */
-  padding: 0px; /* 간격 조절 */
-  z-index: 1000; /* 다른 요소들보다 위에 표시되도록 설정 */
-  color: #494949;
-  font-size: 14px;
-  justify-content: center;
-}
-
-.text-with-image img {
-  width: 130px;
-  height: auto;
-  margin-right: 5px;
-  border-radius: 20%;
-  padding-left: 40px;
-
-}
-
-.signup-container h2 {
-  color: #333;
-}
-
-.signup-container input {
-  width: 100%;
+#signupForm {
   padding: 10px;
-  margin-bottom: 0px;
-  box-sizing: border-box;
+}
+h3, h4, h5 {
+  font-family: 'GmarketSans';
+  font-weight: 700;
+}
+.insertImg {
+  margin-bottom: 10px;
+}
+.seller-img {
+  border: 1px dashed #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+.seller-img-input-info {
+  font-family: 'GmarketSans';
+  font-weight: 300;
+}
+.file-input-btn {
+  margin-top: 10px;
+}
+input[type=email],
+input[type=password],
+input[type=tel],
+input[type=text] {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px;
+  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
-
-.signup-container button {
+input[type=checkbox] {
+  margin-right: 10px;
+}
+button[type=submit] {
   width: 100%;
-  padding: 10px;
-  background-color: #18cc3c;
-  color: #fff;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
-
-.signup-container button:hover {
-  background-color: #00ab03;
+button[type=submit]:hover {
+  background-color: #45a049;
 }
-
-.signup-content-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.content-container a {
-  color: #333;
-  text-decoration: none;
-  margin: 0 10px;
-  font-size: 12px;
-}
-
-.sns-buttons {
-  margin-top: 20px;
-}
-
-.sns-buttons a {
-  display: inline-block;
-  margin: 0 10px;
-  padding: 10px;
-  text-decoration: none;
-  color: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.sns-buttons .facebook {
-  background-color: #3b5998;
-}
-
-.sns-buttons .kakao {
-  background-color: #ffeb00;
-}
-
-.sns-buttons .naver {
-  background-color: #00c63b;
-}
-
-.confortLogin {
-  font-size: 11px;
-  color: #696969;
-  margin-top: 0px;
-  margin-bottom: -7px;
-}
-
-.sns-buttons img {
-  width: 15px;
-  height: 15px;
-  margin-right: 3px;
-}
-
-.insertEmail {
-  text-align: left;
-  margin-top: -30px;
-  margin-bottom: -15px;
-  font-size: 15px;
-  color: #494949;
-}
-
-.insertpassword {
-  text-align: left;
-  margin-bottom: -15px;
-  font-size: 15px;
-  color: #494949;
-}
-
-.insertpassword2 {
-  text-align: left;
-  margin-bottom: 5px;
-  font-size: 10px;
-  color: #494949;
-}
-.insertcheck {
-  text-align: left;
-  margin-bottom: -15px;
-  font-size: 15px;
-  color: #494949;
-}
-
-.insertnick {
-  text-align: left;
-  margin-bottom: -15px;
-  font-size: 15px;
-  color: #494949;
-}
-
-.insertnick2 {
-  text-align: left;
-  margin-bottom: 5px;
-  font-size: 10px;
-  color: #494949;
-}
-
-.signupfont {
-  text-align: center;
-  font-size: 14px;
-  color: #494949;
-}
-
-.line {
-  margin-top: 20px;
-  border: none;
-  height: 1px;
-  background-color: #c2c8cc;
-}
-
-.emailAuth {
-  margin-top: 4px;
-  padding: 0px;
-}
-
-.emailAuth button {
-  width: 100%;
-  padding: 10px;
-  background-color: rgb(247, 248, 250);
-  color: rgb(194, 200, 204);
-  border-color: rgb(218, 220, 224);
-  border: solid 1px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.emailAuth button:hover {
-  background-color: #00ab03;
-}
-
-.consent-label {
-  display: flex;
-  align-items: center;
-  text-align: left;
-  margin-bottom: -10px;
-  font-size: 15px;
-  color: #494949;
-}
-
-.consent-options {
-  border: 1px solid #ccc; /* Add border to wrap the consent options */
-  padding: 10px;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  text-align: left;
-}
-
-.checkbox-wrapper {
-  width: 20px; /* Set the width of the checkbox wrapper */
-  height: 20px; /* Set the height of the checkbox wrapper */
-  border: 1px solid #ccc; /* Add border to create a box */
-  margin-right: 10px; /* Add margin to separate the box from text */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.consent-text {
-  font-size: 11px;
-  color: #494949;
-}
-
-.additional-consent {
-  font-size: 9px;
-  opacity: 0.7; /* 연하게 만들기 위한 투명도 조절 */
-}
-
 </style>
