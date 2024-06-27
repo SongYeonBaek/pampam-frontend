@@ -28,7 +28,6 @@
 
 <script>
 import axios from "axios";
-let backend = "http://www.localfoodpam.kro.kr/api"
 
 
 export default {
@@ -45,7 +44,7 @@ export default {
   }, methods: {
     async getOrderList() {
       let token = localStorage.getItem("accessToken");
-      let response = await axios.get(backend + "/order/list", {
+      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/order/list", {
         headers: {
           Authorization: token
         }

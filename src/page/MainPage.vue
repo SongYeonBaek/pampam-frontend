@@ -122,7 +122,7 @@ export default {
   methods: {
     async getProductList(page, size) {
 
-      let response = await axios.get("http://localhost:8080/product/list?page=" + page + "&size=" + size);
+      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/product/list?page=" + page + "&size=" + size);
       this.productList =  response.data.result;
       console.log(response.data.result);
 

@@ -61,8 +61,6 @@ import CartCardComponent from "../components/CartCardComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import axios from "axios";
 
-const backend = "http://www.localfoodpam.kro.kr/api"
-
 export default {
 
   name: 'CartPage',
@@ -80,7 +78,7 @@ export default {
       let token = localStorage.getItem("accessToken");
       console.log(token);
 
-      let response = await axios.get(backend + "/cart/cartList", {
+      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/cart/cartList", {
         headers: {
           Authorization: token
         }
@@ -123,14 +121,14 @@ export default {
         if (rsp.success) {
           // 결제 성공 시 로직,
           console.log(rsp.imp_uid);
-          let response = await axios.get(backend + "/order/validation?impUid=" + rsp.imp_uid, {
+          let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/order/validation?impUid=" + rsp.imp_uid, {
               headers: {
                 Authorization: localStorage.getItem("accessToken"),
               },
             }
           )
           console.log(response.data)
-          window.location.href =  backend + "/order/complete"
+          window.location.href =  "http://localhost:3000" + "/order/complete"
         }
       }
       )},

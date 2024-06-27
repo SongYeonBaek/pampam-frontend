@@ -22,7 +22,7 @@
         <hr class="line">
       </div>
       <div class="insertImg">
-        <h5>회원 사진</h5>
+        <h5>가게 사진</h5>
         <div class="seller-img">
           <div>
             <span class="seller-img-input-info">
@@ -61,6 +61,11 @@
         <div class="insertnick"><h5>사업자 등록 번호</h5></div>
         <div class="insertnick2">사업자 번호를 정확하게 기입해주세요. (10자)</div>
         <input v-model="member.sellerBusinessNumber" type="text" placeholder="사업자 등록 번호 ('-'를 포함하여 10자를 입력해주세요.)" id="사업자 등록 번호" pattern="[0-9]{3}-{2}-{5}" required>
+        <br>
+
+        <div class="insertnick"><h5>가게 주소</h5></div>
+        <div class="insertnick2">가게 주소를 정확하게 기입해주세요. (10자)</div>
+        <input v-model="member.sellerAddr" type="text" placeholder="가게의 주소를 한글로 입력해주세요" id="가게 주소" pattern="[0-9]{3}-{2}-{5}" required>
         <br>
 
         <div class="consent-container">
@@ -142,8 +147,6 @@
 
 import axios from "axios";
 
-const backend = "http://www.localfoodpam.kro.kr/se"
-
 export default {
   name: 'SignUpPage',
   data() {
@@ -153,7 +156,9 @@ export default {
         sellerPW: "",
         sellerName:"",
         sellerPhoneNum: "",
-        sellerBusinessNumber: ""
+        sellerBusinessNumber: "",
+        sellerAddr: ""
+
       },
       file: ""
     }
@@ -163,9 +168,9 @@ export default {
       console.log(this.member);
 
       const formData = new FormData();
-      formData.append("request", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
-      formData.append("file", this.file[0]);
-      let response = await axios.post(backend + "/seller/signup", formData, {
+      formData.append("sellerSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
+      formData.append("image", this.file[0]);
+      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/seller/signup", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

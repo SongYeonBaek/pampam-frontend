@@ -12,7 +12,7 @@ import SellerSignUpPage from "@/page/SellerSignUpPage.vue";
 import SellerLoginPage from "@/page/SellerLoginPage.vue";
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/'),
     routes : [
         { path: '/', component: MainPage },
         { path: '/verify', component: VerifyPage },
@@ -21,7 +21,7 @@ const router = createRouter({
         { path: '/member/signup', component: SignUpPage },
         { path: '/seller/signup', component: SellerSignUpPage },
         { path: '/cart', component: CartPage },
-        { path: '/product/:productIdx', component: ProductDetailPage },
+        { path: '/product/read/:productIdx', component: ProductDetailPage },
         { path: '/product/register', component: ProductRegister },
         { path: '/order/complete', component: OrderCompletePage },
     ]

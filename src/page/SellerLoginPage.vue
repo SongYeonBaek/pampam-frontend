@@ -43,7 +43,6 @@
 import axios from "axios";
 import {toRaw} from "vue";
 
-const backend = "http://www.localfoodpam.kro.kr/se"
 
 export default {
   name: 'LoginPage',
@@ -64,14 +63,12 @@ export default {
         password: member.password,
       }
 
-      let response = await axios.post(backend + "/seller/login", data);
+      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/seller/login", data);
       console.log(response);
 
-      localStorage.setItem("accessToken", "Bearer " + response.data.result);
+      localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
 
-      window.location.href = "http://www.localfoodpam.kro.kr"
-
-
+      window.location.href = "http://localhost:3000"
     }
   }
 }

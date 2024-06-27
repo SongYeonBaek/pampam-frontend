@@ -2,7 +2,7 @@
   <div class="body-deadline-item-info">
     <div>
       <article class="deadline-item">
-        <router-link v-bind:to="`/product/${product.idx}`">
+        <router-link v-bind:to="`/product/read/${product.idx}`">
           <a class="deadline-item-link"></a>
         </router-link>
 

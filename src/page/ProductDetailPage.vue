@@ -163,7 +163,6 @@ import FooterComponent from "@/components/FooterComponent.vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 
-const backend = "http://www.localfoodpam.kro.kr/api"
 
 export default {
   name: 'ProductDetailPage',
@@ -179,7 +178,7 @@ export default {
 
   methods: {
     async productCartIn() {
-      let response = await axios.get(backend + "/cart/in/" + this.productIdx, {
+      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/cart/in/" + this.productIdx, {
         headers: {
           Authorization: localStorage.getItem("accessToken")
         },
@@ -194,7 +193,7 @@ export default {
       console.log(route.params.productIdx);
       this.productIdx = route.params.productIdx;
 
-      let response = await axios.get(backend + "/product/read/" + this.productIdx, {
+      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/product/read/" + this.productIdx, {
         headers: {
           Authorization: localStorage.getItem("accessToken")
         },

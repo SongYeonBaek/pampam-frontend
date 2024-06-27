@@ -68,19 +68,20 @@ export default {
       }
 
 
-      let response = await axios.post("http://localhost:8080/member/login", data);
+      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/consumer/login", data);
 
       if (response.data.code === 1000) {
-        // window.location.href = "http://www.localfoodpam.kro.kr"
+        alert("로그인 성공")
+        localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
+
       }
 
       if (response.data.code === 3000) {
         alert(response.data.message)
       }
 
-      localStorage.setItem("accessToken", "Bearer " + response.data.result);
 
-      window.location.href = "http://localhost:8080"
+      window.location.href = "http://localhost:3000"
 
 
     }
