@@ -2,7 +2,7 @@
   <HeaderComponent></HeaderComponent>
   <div class="deadline-product">
     <div class="detail-product-img-wrapper">
-      <Splide :options="{ rewind: true, width: '100%' }">
+      <Splide :options="{ rewind: true, width: '100%', heightRatio: 0.1947 }">
         <SplideSlide>
           <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=640" srcset="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=960 1.5x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1280 2x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1920 3x" class="css-1jjjg2j" alt="">
         </SplideSlide>
@@ -69,6 +69,7 @@
   </section>
   <FooterComponent></FooterComponent>
 </template>
+
 <script>
 import HeaderComponent from '../components/HeaderComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
@@ -123,11 +124,23 @@ export default {
 <style>
 /* 배너, 카테고리 */
 
-.deadline-product{
-  height: 370px;
+.deadline-product {
   display: flex;
   align-items: flex-start;
   width: 100%;
+}
+
+.detail-product-img-wrapper {
+  width: 100%;
+}
+
+.splide {
+  width: 100%;
+}
+
+.splide__slide img {
+  width: 100%;
+  height: auto;
 }
 
 .category{
