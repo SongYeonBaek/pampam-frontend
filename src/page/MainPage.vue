@@ -16,64 +16,44 @@
   <nav class="category">
     <ul class="category-items">
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[0].name}">
-        <a :href="`product/category/`"/><img class="image-size" src="../assets/icons8-carrot-96.png">
+        <a @click="selectCategory(categoryList[0])"><img class="image-size" src="../assets/icons8-carrot-96.png"></a>
         <div class="category-items-description">채소</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[1].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-corn-96.png"></a>
+        <a @click="selectCategory(categoryList[1])"><img class="image-size" src="../assets/icons8-corn-96.png"></a>
         <div class="category-items-description">곡류</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[2].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-almond-100.png"></a>
+        <a @click="selectCategory(categoryList[2])"><img class="image-size" src="../assets/icons8-almond-100.png"></a>
         <div class="category-items-description">견과류</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[3].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-mushroom-96.png"></a>
+        <a @click="selectCategory(categoryList[3])"><img class="image-size" src="../assets/icons8-mushroom-96.png"></a>
         <div class="category-items-description">버섯류</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[4].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-orange-1-96.png"></a>
+        <a @click="selectCategory(categoryList[4])"><img class="image-size" src="../assets/icons8-orange-1-96.png"></a>
         <div class="category-items-description">과일</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[5].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-fish-96.png"></a>
+        <a @click="selectCategory(categoryList[5])"><img class="image-size" src="../assets/icons8-fish-96.png"></a>
         <div class="category-items-description">수산</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[6].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-dried-fish-91.png"></a>
+        <a @click="selectCategory(categoryList[6])"><img class="image-size" src="../assets/icons8-dried-fish-91.png"></a>
         <div class="category-items-description">건어물</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[7].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-meat-96.png"></a>
+        <a @click="selectCategory(categoryList[7])"><img class="image-size" src="../assets/icons8-meat-96.png"></a>
         <div class="category-items-description">정육</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[8].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-milk-100.png"></a>
+        <a @click="selectCategory(categoryList[8])"><img class="image-size" src="../assets/icons8-milk-100.png"></a>
         <div class="category-items-description">유제품</div>
-        </router-link>
       </li>
       <li class="category-item">
-        <router-link :to="{ path: '/product/category/' + categoryList[9].name}">
-        <a :href="`product/category/`"><img class="image-size" src="../assets/icons8-beer-96.png"></a>
+        <a @click="selectCategory(categoryList[9])"><img class="image-size" src="../assets/icons8-beer-96.png"></a>
         <div class="category-items-description">주류</div>
-        </router-link>
       </li>
     </ul>
   </nav>
@@ -83,7 +63,7 @@
         <h1 class="body-deadline-item-title">마감임박 상품팜</h1>
       </header>
       <div class="body-deadline-item-list row">
-        <MainCardComponent v-for="product in productList" :key="product.idx" v-bind:product="product"/>
+        <MainCardComponent v-for="product in productStore.productList" :key="product.idx" v-bind:product="product"/>
       </div>
     </div>
   </section>
@@ -94,7 +74,9 @@ import HeaderComponent from '../components/HeaderComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 import MainCardComponent from "@/components/MainCardComponent.vue";
 import '@splidejs/splide/dist/css/splide.min.css';
-import axios from "axios";
+import {mapStores} from "pinia";
+import {useCategoryStore} from "@/stores/useCategoryStore";
+import {useProductStore} from "@/stores/useProductStore";
 
 
 export default {
@@ -104,37 +86,31 @@ export default {
   },
   data() {
     return {
-      productList: [],
       categoryList: [
-        { name: "Vegetable", value: 0},
-        { name: "Nut", value: 1},
-        { name: "Grain", value: 2},
-        { name: "Mushroom", value: 3},
-        { name: "Fruit", value: 4},
-        { name: "SeaFood", value: 5},
-        { name: "DriedFish", value: 6},
-        { name: "Meat", value: 7},
-        { name: "MilkProducts", value: 8},
-        { name: "Drink", value: 9}
+        { name: "Vegetable", value: 1},
+        { name: "Nut", value: 2},
+        { name: "Grain", value: 3},
+        { name: "Mushroom", value: 4},
+        { name: "Fruit", value: 5},
+        { name: "SeaFood", value: 6},
+        { name: "DriedFish", value: 7},
+        { name: "Meat", value: 8},
+        { name: "MilkProducts", value: 9},
+        { name: "Drink", value: 10}
       ]
     };
   },
+  computed: {
+    ...mapStores(useCategoryStore, useProductStore)
+  },
   methods: {
+    selectCategory(category) {
+      console.log(category)
+      this.productList = this.categoryStore.getProductListWithCategory(category.name)
+    },
+
     async getProductList(page, size) {
-
-      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/product/list?page=" + page + "&size=" + size);
-      this.productList =  response.data.result;
-      console.log(response.data.result);
-
-      console.log(response.data.result);
-
-      if (response.data.code === 3000) {
-        alert("현재 서비스에 문제가 발생하였습니다. 다시 시도해주세요.")
-      }
-
-      if (response.data.code === 5000) {
-        alert("현재 서버에서 문제가 발생하였습니다. 나중에 다시 시도해주세요.")
-      }
+      this.productStore.getProductList(page, size)
     }
   },
   mounted() {

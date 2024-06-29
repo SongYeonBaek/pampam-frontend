@@ -109,6 +109,7 @@ export default {
   methods: {
     async register() {
       this.product.productType = this.category2;
+      console.log(this.product.productType)
 
       console.log(this.file[0]);
       console.log(this.file[1]);
@@ -120,8 +121,6 @@ export default {
       this.file.forEach((fileInfo) => {
         formData.append("images", fileInfo);
       })
-      console.log(formData.get("productRegisterReq"));
-      console.log(formData.get("images"));
 
       let response = await axios.post("http://localhost:8080/product/register", formData, {
         headers: {
