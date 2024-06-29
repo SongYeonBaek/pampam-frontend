@@ -101,6 +101,7 @@ export default {
     };
   },
   computed: {
+    // pinia 스토어
     ...mapStores(useCategoryStore, useProductStore)
   },
   methods: {
