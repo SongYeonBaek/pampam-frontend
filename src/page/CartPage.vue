@@ -6,7 +6,7 @@
         <span class="commerce-cart__header__left">
           <label class="_3xqzr _4VN_z">
             <div class="_3zqA8">
-              <input type="checkbox" class="checkAll" checked="" value="">
+              <input type="checkbox" class="checkAll" checked="" value="" v-model="isCheckedAll" @change="checkAllProduct">
               <span class="_2mDYR">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
                   <path fill="currentColor"
@@ -27,7 +27,7 @@
         <li class="commerce-cart__content__group-item">
           <article class="commerce-cart-group">
             <h1 class="commerce-cart__group__header">주식회사 두레샘<!-- --> 배송</h1>
-            <CartCardComponent v-for="product in productList" :key="product.id" v-bind="product" />
+            <CartCardComponent v-for="product in cartStore.productList" :key="product.id" v-bind:product="product" />
           </article>
         </li>
       </ul>
@@ -36,7 +36,7 @@
       <dl class="commerce-cart__summary commerce-cart__side-bar__summary">
         <div class="commerce-cart__summary__row">
           <dt>총 상품금액</dt>
-          <dd><span class="number">{{ amount }}</span>원</dd>
+          <dd><span class="number">{{ cartStore.amount }}</span>원</dd>
         </div>
         <div class="commerce-cart__summary__row">
           <dt>총 배송비</dt>
@@ -44,14 +44,14 @@
         </div>
         <div class="commerce-cart__summary__row">
           <dt>총 할인금액</dt>
-          <dd>- <span class="number">{{ amount - saleAmount}}</span>원</dd>
+          <dd>- <span class="number">{{ cartStore.amount - cartStore.saleAmount}}</span>원</dd>
         </div>
         <div class="commerce-cart__summary__row commerce-cart__summary__row--total">
           <dt>결제금액</dt>
-          <dd><span class="number" >= {{ saleAmount}}</span>원</dd>
+          <dd><span class="number" >= {{ cartStore.saleAmount }}</span>원</dd>
         </div>
       </dl>
-      <button class="commerce-cart__side-bar__order__btn" type="button" @click="ordersCreate"> {{productCount}}개 상품 구매하기</button>
+      <button class="commerce-cart__side-bar__order__btn" type="button" @click="ordersCreate"> {{ cartStore.productCount }}개 상품 구매하기</button>
     </div>
   </div>
 </template>
@@ -60,36 +60,31 @@
 import CartCardComponent from "../components/CartCardComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import axios from "axios";
+import {mapStores} from "pinia";
+import {useCartStore} from "@/stores/useCartStore";
 
 export default {
 
   name: 'CartPage',
+  components: {
+    HeaderComponent,
+    CartCardComponent,
+  },
   data() {
     return {
-      amount: 0,
-      saleAmount: 0,
-      productList: [],
-      customData: [],
-      productCount: 0,
+      isCheckedAll: false
     }
   },
+  computed: {
+    ...mapStores(useCartStore)
+  },
   methods: {
-    async getCartList() {
-      let token = localStorage.getItem("accessToken");
-      console.log(token);
+    async getCartAllProducts() {
+      this.cartStore.getCartList();
+    },
 
-      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/cart/cartList", {
-        headers: {
-          Authorization: token
-        }
-      });
-
-      this.productList = response.data.result;
-      console.log(this.productList);
-      this.amount = this.calculateAmount();
-      this.productCount = this.productList.length;
-      console.log(this.productCount);
-      return this.productList;
+    checkAllProduct() {
+      this.cartStore.toggleCheckAllProducts(this.isCheckedAll)
     },
 
     async ordersCreate() {
@@ -103,20 +98,20 @@ export default {
       let milliseconds = today.getMilliseconds();
       let makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
-      let product_name = "[팜팜] " + this.productList[0].productName + " 외 " + (this.productCount-1) + " 개 상품";
+      let product_name = "[팜팜] " + this.cartStore.isCheckedProducts[0].productName + " 외 " + (this.cartStore.productCount-1) + " 개 상품";
 
       IMP.request_pay({ // param
         pg: "kakaopay.TC0ONETIME",
         pay_method: "card",
         merchant_uid: "IMP"+makeMerchantUid,
         name: product_name,
-        amount: this.saleAmount,
+        amount: this.cartStore.saleAmount,
         buyer_email: "gildong@gmail.com",
         buyer_name: "홍길동",
         buyer_tel: "010-4242-4242",
         buyer_addr: "서울특별시 강남구 신사동",
         buyer_postcode: "01181",
-            custom_data: this.customData
+            custom_data: this.cartStore.custom_data
       }, async rsp => { // callback
         if (rsp.success) {
           // 결제 성공 시 로직,
@@ -132,27 +127,9 @@ export default {
         }
       }
       )},
-
-    calculateAmount: function (){
-      let amount = 0;
-      this.productList.forEach((product) => {
-        console.log(product);
-        amount += product.price;
-        this.saleAmount += product.salePrice;
-        this.customData.push({"id": product.productIdx, "name": product.productName, "price":product.salePrice});
-      })
-      return amount;
-    },
-
   },
-
-    components: {
-      HeaderComponent,
-      CartCardComponent,
-    },
-
     mounted() {
-      this.getCartList();
+      this.getCartAllProducts();
     }
 }
 </script>

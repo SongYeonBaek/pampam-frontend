@@ -3,7 +3,8 @@
     <li class="commerce-cart__delivery-group__product-item">
       <article class="carted-product">
         <div class="carted-product__select">
-          <div class="_3zqA8"><input type="checkbox" class="_3UImz" value="" checked="">
+          <div class="_3zqA8">
+            <input type="checkbox" class="_3UImz" value="" :checked="product.isChecked" @change="checkProduct">
             <span class="_2mDYR">
               <svg
                 width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
@@ -18,12 +19,12 @@
         <a class="product-small-item product-small-item--clickable" href="/productions/1803860/selling">
           <div class="product-small-item__image">
             <picture>
-              <img alt="상품 이미지" :src="image">
+              <img alt="상품 이미지" :src="product.image">
 
             </picture>
           </div>
           <div class="product-small-item__content">
-            <h1 class="product-small-item__title">{{ productName }}</h1>
+            <h1 class="product-small-item__title">{{ product.productName }}</h1>
             <p class="css-w0e4y9 e1xep4wb1">무료배송&nbsp;|&nbsp;일반택배</p>
           </div>
         </a>
@@ -38,7 +39,7 @@
           <span class="carted-product__footer__left">
             <button class="carted-product__edit-btn" type="button">옵션변경</button><button class="carted-product__order-btn"
               type="button">바로구매</button></span><span class="carted-product__subtotal"><span
-              class="carted-product__subtotal__number">{{ salePrice }}</span>원</span>
+              class="carted-product__subtotal__number">{{ product.salePrice }}</span>원</span>
         </div>
       </article>
     </li>
@@ -49,13 +50,33 @@
 </template>
 
 <script>
+import {mapStores} from "pinia";
+import {useCartStore} from "@/stores/useCartStore";
+
 export default {
   name: 'CartCardComponent',
+  data() {
+    return {
+      isCheckedProduct: false,
+    }
+  },
   props: [
-    "productName",
-    "salePrice",
-      "image"
-  ]
+      "product"
+  ],
+  computed: {
+    ...mapStores(useCartStore),
+  },
+  methods: {
+    checkProduct() {
+      if (!this.product.isChecked) {
+        console.log('상품이 선택됨')
+        this.cartStore.checkProduct(this.product)
+      } else {
+        console.log('상품이 선택이 해제됨')
+        this.cartStore.unCheckProduct(this.product)
+      }
+    },
+  },
 }
 </script>
 
