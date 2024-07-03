@@ -25,9 +25,10 @@
       </div>
       <br>
 
+
       <form id="signupForm">
         <div class="insertImg">
-          <h5>회원 사진</h5>
+          <h5>프로필 이미지</h5>
           <div class="seller-img">
             <div>
             <span class="seller-img-input-info">
@@ -49,7 +50,7 @@
 
         <div class="insertpassword"><h5>비밀번호</h5></div>
         <div class="insertpassword2">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
-        <input v-model="member.password" type="password" placeholder="비밀번호 입력" required>
+        <input v-model="member.consumerPW" type="password" placeholder="비밀번호 입력" required>
         <br>
 
         <div class="insertcheck"><h5>전화번호</h5></div>
@@ -210,6 +211,8 @@ h3, h4, h5 {
   font-family: 'GmarketSans';
   font-weight: 700;
 }
+
+
 .insertImg {
   margin-bottom: 10px;
 }
