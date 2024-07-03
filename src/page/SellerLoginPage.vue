@@ -42,7 +42,7 @@
 <script>
 import axios from "axios";
 import {toRaw} from "vue";
-
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: 'LoginPage',
@@ -63,12 +63,12 @@ export default {
         password: member.password,
       }
 
-      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/seller/login", data);
+      let response = await axios.post( `${backend}/member/seller/login`, data);
       console.log(response);
 
       localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
 
-      window.location.href = "http://localhost:3000"
+      window.location.href = "/"
     }
   }
 }

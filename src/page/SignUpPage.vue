@@ -104,6 +104,7 @@
 
 <script>
 import axios from "axios";
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: 'SignUpPage',
@@ -133,7 +134,7 @@ export default {
       formData.append("memberSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
       formData.append("profileImage", this.file[0]);
 
-      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/consumer/signup", formData, {
+      let response = await axios.post(`${backend}/member/consumer/signup`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -142,7 +143,7 @@ export default {
 
       if (response.data.code === 1000) {
         alert("회원가입 성공")
-        window.location.href = "http://localhost:3000"
+        window.location.href = "/"
       }
 
       if (response.data.code === 3000) {

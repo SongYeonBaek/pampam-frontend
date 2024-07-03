@@ -63,6 +63,8 @@ import axios from "axios";
 import {mapStores} from "pinia";
 import {useCartStore} from "@/stores/useCartStore";
 
+const backend = process.env.VUE_APP_ENDPOINT
+
 export default {
 
   name: 'CartPage',
@@ -116,14 +118,14 @@ export default {
         if (rsp.success) {
           // 결제 성공 시 로직,
           console.log(rsp.imp_uid);
-          let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/order/validation?impUid=" + rsp.imp_uid, {
+          let response = await axios.get(`${backend}/order/validation?impUid=` + rsp.imp_uid, {
               headers: {
                 Authorization: localStorage.getItem("accessToken"),
               },
             }
           )
           console.log(response.data)
-          window.location.href =  "http://localhost:3000" + "/order/complete"
+          window.location.href =  "/order/complete"
         }
       }
       )},

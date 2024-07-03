@@ -10,7 +10,7 @@ export const useProductStore = defineStore('product', {
     actions: {
         async getProductList(page, size) {
 
-            let response = await axios.get(backend + "/product/list?page=" + page + "&size=" + size);
+            let response = await axios.get(`${backend}/product/list?page=` + page + "&size=" + size);
             response.data.result.forEach((product) => {
                 this.productList.push(product)
             })

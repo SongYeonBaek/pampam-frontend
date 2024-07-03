@@ -28,7 +28,7 @@
 
 <script>
 import axios from "axios";
-
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: "OrderCompletePage",
@@ -44,7 +44,7 @@ export default {
   }, methods: {
     async getOrderList() {
       let token = localStorage.getItem("accessToken");
-      let response = await axios.get(process.env.VUE_APP_ENDPOINT + "/order/list", {
+      let response = await axios.get(`${backend}/order/list`, {
         headers: {
           Authorization: token
         }
