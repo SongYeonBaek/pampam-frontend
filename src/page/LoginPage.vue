@@ -7,6 +7,25 @@
             <img src="../../public/icon/pampam-logo.png" alt="Pampam 로고">
           </router-link>
         </div>
+
+        <div class="from-developer">
+          <h4 class="from-developer-title">
+            from. 팜팜 개발자 👩‍💻💌
+            <br>
+          </h4>
+          <h4 class="from-developer-credentials">
+            email : test@test.com <br>
+            pw : qwer1234
+          </h4>
+          <p>
+            위 계정으로 자유롭게 쇼핑몰을 이용해 보세요! <br>
+            회원가입 후 해당 계정으로 이용해 보셔도 됩니다 😊 <br>
+            즐거운 쇼핑 되세요! 🎁🛍️
+          </p>
+        </div>
+
+        <hr style="margin-bottom: 20px">
+
         <form id="loginForm" @submit.prevent>
           <input v-model="member.email" type="text" placeholder="이메일" id="이메일" required>
           <input v-model="member.password" type="password" placeholder="비밀번호" id="비밀번호" required>
@@ -81,7 +100,7 @@ export default {
       }
 
 
-      window.location.href = "http://localhost:3000"
+      // window.location.href = "http://localhost:3000"
 
 
     }
@@ -93,6 +112,40 @@ export default {
 *{
   font-family: 'GmarketSans';
 }
+
+.from-developer {
+  background-color: #fff3cd;
+  border: 2px solid #ffecb5;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  color: #856404;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.from-developer-title {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  color: #d39e00;
+  margin-bottom: 15px;
+}
+
+.from-developer-credentials {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #856404;
+}
+
+.from-developer p {
+  margin: 0;
+  line-height: 1.5;
+
+  font-weight: lighter;
+  font-size: small;
+}
+
 
 .login-content {
   justify-content: center;
