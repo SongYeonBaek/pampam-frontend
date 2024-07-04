@@ -146,6 +146,7 @@
 <script>
 
 import axios from "axios";
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: 'SignUpPage',
@@ -170,7 +171,7 @@ export default {
       const formData = new FormData();
       formData.append("sellerSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
       formData.append("image", this.file[0]);
-      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/seller/signup", formData, {
+      let response = await axios.post(`${backend}/member/seller/signup`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

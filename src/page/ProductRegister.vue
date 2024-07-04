@@ -70,7 +70,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 
 import '@vuepic/vue-datepicker/dist/main.css'
 import axios from "axios";
-
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: "ProductRegisterPage",
@@ -122,7 +122,7 @@ export default {
         formData.append("images", fileInfo);
       })
 
-      let response = await axios.post("http://localhost:8080/product/register", formData, {
+      let response = await axios.post(`${backend}/product/register`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: localStorage.getItem("accessToken")

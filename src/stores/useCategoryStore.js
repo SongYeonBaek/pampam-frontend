@@ -11,7 +11,7 @@ export const useCategoryStore = defineStore('category', {
     actions: {
         async getProductListWithCategory(categoryName) {
             let token = localStorage.getItem('accessToken')
-            let response = await axios.get(backend + "/category/search/type/" + categoryName, {
+            let response = await axios.get( `${backend}/category/search/type/` + categoryName, {
                 headers: {
                     Authorization: token
                 }

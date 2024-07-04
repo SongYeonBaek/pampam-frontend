@@ -66,6 +66,7 @@
 <script>
 import axios from "axios";
 import {toRaw} from "vue";
+const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
   name: 'LoginPage',
@@ -87,7 +88,7 @@ export default {
       }
 
 
-      let response = await axios.post(process.env.VUE_APP_ENDPOINT + "/member/consumer/login", data);
+      let response = await axios.post(`${backend}/member/consumer/login`, data);
 
       if (response.data.code === 1000) {
         alert("로그인 성공")
@@ -100,7 +101,7 @@ export default {
       }
 
 
-      // window.location.href = "http://localhost:3000"
+      window.location.href = "/"
 
 
     }
