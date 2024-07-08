@@ -58,17 +58,17 @@ export const useCartStore = defineStore("cart", {
             this.isCheckedProducts.push(product)
             this.amount = this.calculateAmount()
             this.productCount = this.isCheckedProducts.length
+            this.customData.push({"id": product.productIdx, "name": product.productName, "price":product.salePrice});
+            console.log(this.customData)
         },
 
         diffAmount(uncheckedProduct) {
             if (this.amount > 0) {
-                this.isCheckedProducts.forEach((product) => {
-                  if (product === uncheckedProduct) {
-                      this.isCheckedProducts.pop()
-                  }
-                })
+                this.customData = this.customData.filter(product => product.id !== uncheckedProduct.productIdx)
+                this.isCheckedProducts = this.isCheckedProducts.filter(product => product.productIdx !== uncheckedProduct.productIdx)
                 this.amount = this.calculateAmount()
                 this.productCount = this.isCheckedProducts.length
+                console.log(this.customData)
             }
         },
         calculateAmount: function (){
@@ -77,7 +77,6 @@ export const useCartStore = defineStore("cart", {
             this.isCheckedProducts.forEach((product) => {
                 amount += product.price;
                 this.saleAmount += product.salePrice;
-                this.customData.push({"id": product.productIdx, "name": product.productName, "price":product.salePrice});
             })
             return amount;
         },

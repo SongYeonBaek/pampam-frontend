@@ -92,7 +92,7 @@ export default {
     async ordersCreate() {
       const { IMP } = window;
       IMP.init('imp62836256');
-
+      console.log(this.cartStore.customData)
       let today = new Date();
       let hours = today.getHours(); // 시
       let minutes = today.getMinutes();  // 분
@@ -113,7 +113,7 @@ export default {
         buyer_tel: "010-4242-4242",
         buyer_addr: "서울특별시 강남구 신사동",
         buyer_postcode: "01181",
-            custom_data: this.cartStore.custom_data
+            custom_data: this.cartStore.customData
       }, async rsp => { // callback
         if (rsp.success) {
           // 결제 성공 시 로직,

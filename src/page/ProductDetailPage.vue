@@ -193,17 +193,22 @@ export default {
       console.log(route.params.productIdx);
       this.productIdx = route.params.productIdx;
 
-      let response = await axios.get(`${backend}/product/read/` + this.productIdx, {
-        headers: {
-          Authorization: localStorage.getItem("accessToken")
-        },
-      })
+      try {
+        let response = await axios.get(`${backend}/product/read/` + this.productIdx, {
+          headers: {
+            Authorization: localStorage.getItem("accessToken")
+          },
+        })
 
-      this.product = response.data.result;
+        this.product = response.data.result;
 
-      if (response.data.code === 3000) {
-        alert(response.data.message);
+        if (response.data.code === 3000) {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        console.log(error)
       }
+
     }
   },
   mounted() {

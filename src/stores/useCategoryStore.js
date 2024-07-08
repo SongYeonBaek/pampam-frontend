@@ -10,6 +10,7 @@ export const useCategoryStore = defineStore('category', {
     }),
     actions: {
         async getProductListWithCategory(categoryName) {
+            this.productListWithCategory = []
             let token = localStorage.getItem('accessToken')
             let response = await axios.get( `${backend}/category/search/type/` + categoryName, {
                 headers: {
@@ -24,7 +25,7 @@ export const useCategoryStore = defineStore('category', {
                 this.productListWithCategory.push(product)
             })
 
-            useProductStore().productTest(this.productListWithCategory)
+            useProductStore().searchProductWithCategory(this.productListWithCategory)
         }
     }
 })

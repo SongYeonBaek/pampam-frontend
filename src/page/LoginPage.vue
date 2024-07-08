@@ -100,10 +100,7 @@ export default {
         alert(response.data.message)
       }
 
-
       window.location.href = "/"
-
-
     }
   }
 }

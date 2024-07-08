@@ -107,7 +107,6 @@ export default {
   },
   methods: {
     selectCategory(category) {
-      console.log(category)
       this.productList = this.categoryStore.getProductListWithCategory(category.name)
     },
 

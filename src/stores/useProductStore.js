@@ -9,15 +9,14 @@ export const useProductStore = defineStore('product', {
     }),
     actions: {
         async getProductList(page, size) {
-
+            this.productList = []
             let response = await axios.get(`${backend}/product/list?page=` + page + "&size=" + size);
             response.data.result.forEach((product) => {
                 this.productList.push(product)
             })
-            console.log(this.productList)
         },
 
-        productTest(productListWithCategory) {
+        searchProductWithCategory(productListWithCategory) {
             this.productList = []
             this.productList = productListWithCategory
         },
