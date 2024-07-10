@@ -91,7 +91,7 @@ export default {
         { name: "유제품", value: 9},
         { name: "주류", value: 10}
       ],
-      category2: "",
+      category2: 0,
       product: {
         productName: "",
         price: 0,
@@ -108,8 +108,8 @@ export default {
   components: {FooterComponent, HeaderComponent, VueDatePicker},
   methods: {
     async register() {
-      this.product.productType = this.category2;
-      console.log(this.product.productType)
+      this.product.categoryIdx = this.category2;
+      console.log(this.product.categoryIdx)
 
       console.log(this.file[0]);
       console.log(this.file[1]);
