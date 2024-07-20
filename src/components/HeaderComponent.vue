@@ -17,7 +17,7 @@
           <a @click="toggleLoginDropdown" style="cursor: pointer;">로그인</a>
           <div v-show="showLoginDropdown" class="dropdown-content">
             <router-link to="/member/login">
-              <img src="https://png.pngtree.com/png-vector/20240708/ourlarge/pngtree-flat-icon-of-a-cowboy-isolated-on-white-with-mustache-and-vector-png-image_7219275.png" class="dropdown-icon" alt="구매자 로그인 아이콘">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvudaNe9wrggItvIkA_5JFNSMmmYYHAGy5PQ&s" class="dropdown-icon" alt="구매자 로그인 아이콘">
               <span class="dropdown-text">구매자 로그인</span>
             </router-link>
             <router-link to="/seller/login">
@@ -32,7 +32,7 @@
           <a @click="toggleSignupDropdown" style="cursor: pointer;">회원가입</a>
           <div v-show="showSignupDropdown" class="dropdown-content signup-dropdown-content">
             <router-link to="/member/signup">
-              <img src="https://png.pngtree.com/png-vector/20240708/ourlarge/pngtree-flat-icon-of-a-cowboy-isolated-on-white-with-mustache-and-vector-png-image_7219275.png" class="dropdown-icon" alt="구매자 회원가입 아이콘">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvudaNe9wrggItvIkA_5JFNSMmmYYHAGy5PQ&s" class="dropdown-icon" alt="구매자 회원가입 아이콘">
               <span class="dropdown-text">구매자 회원가입</span>
             </router-link>
             <router-link to="/seller/signup">
