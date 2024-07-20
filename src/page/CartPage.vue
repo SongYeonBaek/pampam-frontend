@@ -125,6 +125,7 @@ export default {
             }
           )
           console.log(response.data)
+
           window.location.href =  "/order/complete"
         }
       }

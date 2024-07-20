@@ -20,8 +20,8 @@
         <div class="deadline-item-content">
           <div>
             <h1 class="deadline-item-header">
-              <span class="deadline-item-header-brand">{{ product.productName }}</span>
-              <span class="deadline-item-header-name">{{ product.productInfo }}</span>
+<!--              <span class="deadline-item-header-brand">{{ product.productName }}</span>-->
+              <span class="deadline-item-header-name">{{ product.productName }}</span>
             </h1>
             <span class="deadline-item-price">
                 <span class="deadline-item-price-rate">
@@ -31,7 +31,8 @@
                 <span class="deadline-item-price-price">{{ product.salePrice }} 원</span>
             </span>
             <div>
-              현재 참여 인원 <span style="font-weight: bold"> {{ product.peopleCount}}명</span>
+              <span>현재 참여 인원 </span>
+              <span style="font-weight: bold"> {{ product.peopleCount}}명</span>
             </div>
           </div>
         </div>
@@ -303,7 +304,7 @@ div{
 }
 .deadline-item-header-name {
   margin-top: 5px;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 17px;
   max-height: 34px;
@@ -313,9 +314,9 @@ div{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 23px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .deadline-item-price-rate {
   color: rgb(24, 204, 60);
