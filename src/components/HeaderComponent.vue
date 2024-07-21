@@ -9,11 +9,11 @@
       <div class="center"></div>
       <div class="right">
         <div class="right-cart">
-          <router-link to="/cart">
+          <a @click="handleCartClick">
             <i style="padding-top: 11px;" class="fa-solid fa-cart-shopping"></i>
-          </router-link>
+          </a>
         </div>
-        <div class="right-login">
+        <div class="right-login" v-if="!token.authority">
           <a @click="toggleLoginDropdown" style="cursor: pointer;">로그인</a>
           <div v-show="showLoginDropdown" class="dropdown-content">
             <router-link to="/member/login">
@@ -25,10 +25,12 @@
               <span class="dropdown-text">판매자 로그인</span>
             </router-link>
           </div>
-          <a v-if="token.authority" href="/" @click="logOut">로그아웃</a>
+        </div>
+        <div class="right-logout" v-else>
+          <a href="/" @click="logOut">로그아웃</a>
         </div>
         <br>
-        <div class="right-signup">
+        <div class="right-signup" v-if="!token.authority">
           <a @click="toggleSignupDropdown" style="cursor: pointer;">회원가입</a>
           <div v-show="showSignupDropdown" class="dropdown-content signup-dropdown-content">
             <router-link to="/member/signup">
@@ -74,12 +76,10 @@ export default {
   methods: {
     async showData() {
       let token = localStorage.getItem("accessToken")
-      token = VueJwtDecode.decode(token.split(" ")[1]);
-      console.log(token);
-      if (token.authority === 'SELLER') {
-        console.log("ok");
+      if (token) {
+        token = VueJwtDecode.decode(token.split(" ")[1]);
+        this.token = token;
       }
-      this.token = token;
     },
     toggleLoginDropdown() {
       this.showLoginDropdown = !this.showLoginDropdown;
@@ -90,6 +90,12 @@ export default {
     logOut() {
       localStorage.clear();
       this.token = {};
+    },
+    handleCartClick() {
+      if (!localStorage.getItem("accessToken")) {
+        alert("로그인을 해주세요.");
+      }
+      else this.$router.push("/cart");
     }
   },
   mounted() {
