@@ -1,36 +1,41 @@
 <template>
-<HeaderComponent/>
+  <HeaderComponent/>
   <div class="cart">
     <div class="cart-left">
-      <div class="sticky-child commerce-cart__header">
-        <span class="commerce-cart__header__left">
-          <label class="_3xqzr _4VN_z">
-            <div class="_3zqA8">
-              <input type="checkbox" class="checkAll" checked="" value="" v-model="isCheckedAll" @change="checkAllProduct">
-              <span class="_2mDYR">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
-                  <path fill="currentColor"
-                    d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path>
-                </svg>
-              </span>
-            </div>
-            <span class="_1aN3J">
-              <span class="commerce-cart__header__caption" style="padding-left: 8px;">모두선택</span>
-            </span>
-          </label>
-        </span>
-        <span class="commerce-cart__header__right"><button class="commerce-cart__header__delete"
-            type="button">선택삭제</button>
-        </span>
+      <div v-if="cartStore.productList.length === 0" class="empty-cart">
+        카트가 비어있습니다
       </div>
-      <ul class="commerce-cart__content__group-list">
-        <li class="commerce-cart__content__group-item">
-          <article class="commerce-cart-group">
-            <h1 class="commerce-cart__group__header">주식회사 두레샘<!-- --> 배송</h1>
-            <CartCardComponent v-for="product in cartStore.productList" :key="product.id" v-bind:product="product" />
-          </article>
-        </li>
-      </ul>
+      <div v-else>
+        <div class="sticky-child commerce-cart__header">
+          <span class="commerce-cart__header__left">
+            <label class="_3xqzr _4VN_z">
+              <div class="_3zqA8">
+                <input type="checkbox" class="checkAll" checked="" value="" v-model="isCheckedAll" @change="checkAllProduct">
+                <span class="_2mDYR">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
+                    <path fill="currentColor"
+                          d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path>
+                  </svg>
+                </span>
+              </div>
+              <span class="_1aN3J">
+                <span class="commerce-cart__header__caption" style="padding-left: 8px;">모두선택</span>
+              </span>
+            </label>
+          </span>
+          <span class="commerce-cart__header__right"><button class="commerce-cart__header__delete"
+                                                             type="button">선택삭제</button>
+          </span>
+        </div>
+        <ul class="commerce-cart__content__group-list">
+          <li class="commerce-cart__content__group-item">
+            <article class="commerce-cart-group">
+              <h1 class="commerce-cart__group__header">주식회사 두레샘 배송</h1>
+              <CartCardComponent v-for="product in cartStore.productList" :key="product.id" v-bind:product="product" />
+            </article>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="cart-right">
       <dl class="commerce-cart__summary commerce-cart__side-bar__summary">
@@ -103,37 +108,37 @@ export default {
       let product_name = "[팜팜] " + this.cartStore.isCheckedProducts[0].productName + " 외 " + (this.cartStore.productCount-1) + " 개 상품";
 
       IMP.request_pay({ // param
-        pg: "kakaopay.TC0ONETIME",
-        pay_method: "card",
-        merchant_uid: "IMP"+makeMerchantUid,
-        name: product_name,
-        amount: this.cartStore.saleAmount,
-        buyer_email: "gildong@gmail.com",
-        buyer_name: "홍길동",
-        buyer_tel: "010-4242-4242",
-        buyer_addr: "서울특별시 강남구 신사동",
-        buyer_postcode: "01181",
+            pg: "kakaopay.TC0ONETIME",
+            pay_method: "card",
+            merchant_uid: "IMP"+makeMerchantUid,
+            name: product_name,
+            amount: this.cartStore.saleAmount,
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
             custom_data: this.cartStore.customData
-      }, async rsp => { // callback
-        if (rsp.success) {
-          // 결제 성공 시 로직,
-          console.log(rsp.imp_uid);
-          let response = await axios.get(`${backend}/order/validation?impUid=` + rsp.imp_uid, {
-              headers: {
-                Authorization: localStorage.getItem("accessToken"),
-              },
-            }
-          )
-          console.log(response.data)
+          }, async rsp => { // callback
+            if (rsp.success) {
+              // 결제 성공 시 로직,
+              console.log(rsp.imp_uid);
+              let response = await axios.get(`${backend}/order/validation?impUid=` + rsp.imp_uid, {
+                    headers: {
+                      Authorization: localStorage.getItem("accessToken"),
+                    },
+                  }
+              )
+              console.log(response.data)
 
-          window.location.href =  "/order/complete"
-        }
-      }
+              window.location.href =  "/order/complete"
+            }
+          }
       )},
   },
-    mounted() {
-      this.getCartAllProducts();
-    }
+  mounted() {
+    this.getCartAllProducts();
+  }
 }
 </script>
 
@@ -163,10 +168,14 @@ p.basic:hover {
   padding-top: 20px;
   position: absolute;
   background-color: #f5f5f5;
-  /* flex: 1 0 auto; */
-  /* height: 100%; */
   width: 100%;
-  /* height: 1000px; */
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 50px;
+  font-size: 20px;
+  color: #888;
 }
 
 /* cart-right */
@@ -260,7 +269,6 @@ li {
   box-sizing: border-box;
   padding: 8px 15px;
   margin: 0 0 11px;
-  /* background-color: #ededed; */
   border-bottom: 1px solid #ededed;
   z-index: 100;
 }
@@ -281,7 +289,6 @@ li {
   margin: 0;
   padding: 0;
   cursor: inherit;
-  /* opacity: 0; */
   box-sizing: border-box;
 }
 
