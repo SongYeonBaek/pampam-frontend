@@ -345,5 +345,6 @@ div{
 
 .image {
   width: 200px;
+  border-radius: 5px;
 }
 </style>

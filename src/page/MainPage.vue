@@ -69,17 +69,27 @@
           <span class="css-46dvfb ezs8n5y1">공동구매가 마감되기 전에 get 하세요! 🛍️ </span>
         </div>
       </div>
-
+      <div class="body-deadline-item-list row">
+        <Splide :options="{ perPage: 4, rewind: true, gap: '1rem' }">
+          <SplideSlide v-for="product in productStore.productList" :key="product.idx">
+            <MainCardComponent v-bind:product="product" />
+          </SplideSlide>
+        </Splide>
+      </div>
       <!-- 실시간 핫한 상품 슬라이드 -->
 
-      <div class="css-usas7k ezs8n5y0" type="RANDOM_COLLECTION_NUMBER">
+      <div class="css-usas7k ezs8n5y0" type="RANDOM_COLLECTION_NUMBER" style="margin-top: 80px">
         <div type="RANDOM_COLLECTION_NUMBER" class="css-1ytvbby ezs8n5y4">
           <span class="css-qmz9qs ezs8n5y2">🏆 실시간 랭킹 상품 팜 🏆</span>
-          <span class="css-46dvfb ezs8n5y1"> 사람들은 이런 상품을 구매하고 있어요 👀 </span>
+          <span class="css-46dvfb ezs8n5y1" > 사람들은 이런 상품을 구매하고 있어요 👀 </span>
         </div>
       </div>
       <div class="body-deadline-item-list row">
-        <MainCardComponent v-for="product in productStore.productList" :key="product.idx" v-bind:product="product" />
+        <Splide :options="{ perPage: 4, rewind: true, gap: '1rem' }">
+          <SplideSlide v-for="product in productStore.productList" :key="product.idx">
+            <MainCardComponent v-bind:product="product" />
+          </SplideSlide>
+        </Splide>
       </div>
     </div>
   </section>
@@ -138,8 +148,6 @@ export default {
 </script>
 
 <style>
-/* 배너, 카테고리 */
-
 .deadline-product {
   display: flex;
   align-items: flex-start;
@@ -148,15 +156,23 @@ export default {
 
 .detail-product-img-wrapper {
   width: 100%;
+  height: 370px; /* 배너 높이 설정 */
+  overflow: hidden; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
 }
 
 .splide {
   width: 100%;
+  height: 100%; /* 슬라이드 높이 맞춤 */
+}
+
+.splide__slide {
+  height: 100%; /* 슬라이드 높이 맞춤 */
 }
 
 .splide__slide img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover; /* 이미지를 슬라이드에 맞게 확대 */
 }
 
 .category {
@@ -233,15 +249,12 @@ div {
 
 .body-deadline-item-list {
   display: flex;
-  -webkit-flex-wrap: wrap;
-  -moz-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   box-sizing: border-box;
   margin-right: -7.5px;
   margin-left: -7.5px;
   justify-content: center;
-
+  width: 70%;
 }
 
 .body-deadline-item-header {
@@ -285,7 +298,9 @@ div {
 
 .store-index-div {
   margin-top: 50px;
-  /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
 }
 
 #store-index {
@@ -300,7 +315,6 @@ div {
   line-height: 31px;
   font-weight: 500;
   display: -webkit-box;
-  //overflow: hidden;
   word-break: break-all;
   white-space: normal;
   -webkit-line-clamp: 2;
@@ -336,4 +350,10 @@ div {
   -webkit-box-pack: justify;
   justify-content: space-between;
 }
+
+.store-index container {
+  display: flex;
+  justify-content: center;
+}
+
 </style>
