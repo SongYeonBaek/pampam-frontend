@@ -20,6 +20,7 @@
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvudaNe9wrggItvIkA_5JFNSMmmYYHAGy5PQ&s" class="dropdown-icon" alt="구매자 로그인 아이콘">
               <span class="dropdown-text">구매자 로그인</span>
             </router-link>
+
             <router-link to="/seller/login">
               <img src="https://png.pngtree.com/png-vector/20240708/ourlarge/pngtree-flat-icon-of-a-cowboy-isolated-on-white-with-mustache-and-vector-png-image_7219275.png" class="dropdown-icon" alt="판매자 로그인 아이콘">
               <span class="dropdown-text">판매자 로그인</span>
@@ -48,14 +49,6 @@
             <button class="mybutton" style="background-color:rgb(24, 204, 60); border-color: rgb(30, 199, 64); border-width: 1px; width: 91px; height: 45px;">상품 등록</button>
           </router-link>
         </div>
-      </div>
-    </div>
-    <div style="align-content: center" class="header-sub">
-      <div class="header-shoppingHome">
-        <p class="basic" style="font-size: 14px;">쇼핑홈</p>
-      </div>
-      <div class="header-category">
-        <p class="basic" style="font-size: 14px;">카테고리</p>
       </div>
     </div>
   </header>
@@ -129,16 +122,31 @@ p.basic:hover{
 }
 
 .header-container{
-  height: 80.75px;
+  height: 85px;
   flex-direction: row;
   display: flex;
-  margin-left: 105px;
+  background-color: #F9F9F9;;
+
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 90px;
+  padding: 1rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
 }
 
 .logo{
-  width: 100px;
+  width: 130px;
   height: 90px;
-  margin-left: 30px;
+  margin-left: 135px;
   margin-right:30px;
 }
 
@@ -248,26 +256,5 @@ p.basic:hover{
 
 .mybutton:hover{
   background-color: #00ab03;
-}
-
-.header-sub{
-  border-top:1px solid gainsboro;
-  height: 80.75px;
-  flex-direction: row;
-  display: flex;
-  font-weight: 200;
-}
-
-.header-shoppingHome{
-  width : 100px;
-  height : 80.75px;;
-  margin-left: 145px;
-  margin-top: 15px;
-}
-.header-category{
-  width : 100px;
-  height : 80.75px;;
-  margin-left: -33px;
-  margin-top: 15px;
 }
 </style>

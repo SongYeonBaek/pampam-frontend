@@ -1,5 +1,16 @@
 <template>
   <HeaderComponent></HeaderComponent>
+
+  <div style="align-content: center" class="header-sub">
+    <div class="header-shoppingHome">
+      <p class="basic" style="font-size: 14px;">쇼핑홈</p>
+    </div>
+    <div class="header-category">
+      <p class="basic" style="font-size: 14px;">카테고리</p>
+    </div>
+  </div>
+
+
   <div class="deadline-product">
     <div class="detail-product-img-wrapper">
       <Splide :options="{ rewind: true, width: '100%', heightRatio: 0.1947 }">
@@ -148,15 +159,17 @@ export default {
 </script>
 
 <style>
+
 .deadline-product {
   display: flex;
   align-items: flex-start;
   width: 100%;
+  overflow: auto;
 }
 
 .detail-product-img-wrapper {
   width: 100%;
-  height: 370px; /* 배너 높이 설정 */
+  height: 334px; /* 배너 높이 설정 */
   overflow: hidden; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
 }
 
@@ -176,8 +189,9 @@ export default {
 }
 
 .category {
+  margin-top: 30px;
   width: 100%;
-  height: 176px;
+  height: 130px;
   margin-left: 10px;
 }
 
@@ -337,15 +351,15 @@ div {
   line-height: 18px;
   margin-top: 4px;
   display: -webkit-box;
-  overflow: hidden;
   word-break: break-all;
   white-space: normal;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  margin-bottom: 20px;
 }
 
 .css-usas7k {
-  padding: 24px 16px;
+  padding: 10px 16px;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -356,4 +370,26 @@ div {
   justify-content: center;
 }
 
+
+.header-sub{
+  margin-top: 80px;
+  border-top:1px solid gainsboro;
+  height: 80.75px;
+  flex-direction: row;
+  display: flex;
+  font-weight: 200;
+}
+
+.header-shoppingHome{
+  width : 100px;
+  height : 80.75px;;
+  margin-left: 145px;
+  margin-top: 15px;
+}
+.header-category{
+  width : 100px;
+  height : 80.75px;;
+  margin-left: -33px;
+  margin-top: 15px;
+}
 </style>

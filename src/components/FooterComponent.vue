@@ -50,7 +50,7 @@
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation">|</span>
-            대표이사 양호신 | 백송연
+            대표이사 양호신 백송연
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation"></span>
