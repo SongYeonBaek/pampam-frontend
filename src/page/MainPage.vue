@@ -4,10 +4,13 @@
     <div class="detail-product-img-wrapper">
       <Splide :options="{ rewind: true, width: '100%', heightRatio: 0.1947 }">
         <SplideSlide>
-          <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=640" srcset="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=960 1.5x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1280 2x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1920 3x" class="css-1jjjg2j" alt="">
+          <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=640" class="css-1jjjg2j" alt="">
         </SplideSlide>
         <SplideSlide>
-          <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=640" srcset="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=960 1.5x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1280 2x,https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=1920 3x" class="css-1jjjg2j" alt="">
+          <img src="https://product-image.kurly.com/hdims/resize/%3E1900x%3E370/quality/85/src/banner/main/pc/img/4a411334-393f-4028-ae78-8d8e67a74b05.jpg" class="css-1jjjg2j" alt="">
+        </SplideSlide>
+        <SplideSlide>
+          <img src="https://product-image.kurly.com/hdims/resize/%3E1900x%3E370/quality/85/src/banner/main/pc/img/a2047bbf-1c17-4165-869e-4385e966b53a.jpg" class="css-1jjjg2j" alt="">
         </SplideSlide>
       </Splide>
     </div>
@@ -58,12 +61,25 @@
     </ul>
   </nav>
   <section id="store-index container">
+    <!-- 마감 임박 상품 슬라이드 -->
     <div class="body-deadline-item store-index-div">
-      <header class="body-deadline-item-header">
-        <h1 class="body-deadline-item-title">마감임박 상품팜</h1>
-      </header>
+      <div class="css-usas7k ezs8n5y0" type="RANDOM_COLLECTION_NUMBER">
+        <div type="RANDOM_COLLECTION_NUMBER" class="css-1ytvbby ezs8n5y4">
+          <span class="css-qmz9qs ezs8n5y2"> ⏰ 마감 임박 상품 팜 ⏰ </span>
+          <span class="css-46dvfb ezs8n5y1">공동구매가 마감되기 전에 get 하세요! 🛍️ </span>
+        </div>
+      </div>
+
+      <!-- 실시간 핫한 상품 슬라이드 -->
+
+      <div class="css-usas7k ezs8n5y0" type="RANDOM_COLLECTION_NUMBER">
+        <div type="RANDOM_COLLECTION_NUMBER" class="css-1ytvbby ezs8n5y4">
+          <span class="css-qmz9qs ezs8n5y2">🏆 실시간 랭킹 상품 팜 🏆</span>
+          <span class="css-46dvfb ezs8n5y1"> 사람들은 이런 상품을 구매하고 있어요 👀 </span>
+        </div>
+      </div>
       <div class="body-deadline-item-list row">
-        <MainCardComponent v-for="product in productStore.productList" :key="product.idx" v-bind:product="product"/>
+        <MainCardComponent v-for="product in productStore.productList" :key="product.idx" v-bind:product="product" />
       </div>
     </div>
   </section>
@@ -75,29 +91,30 @@ import HeaderComponent from '../components/HeaderComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 import MainCardComponent from "@/components/MainCardComponent.vue";
 import '@splidejs/splide/dist/css/splide.min.css';
-import {mapStores} from "pinia";
-import {useCategoryStore} from "@/stores/useCategoryStore";
-import {useProductStore} from "@/stores/useProductStore";
-
+import { mapStores } from "pinia";
+import { useCategoryStore } from "@/stores/useCategoryStore";
+import { useProductStore } from "@/stores/useProductStore";
 
 export default {
   name: 'MainPage',
   components: {
-    HeaderComponent,FooterComponent,MainCardComponent
+    HeaderComponent,
+    FooterComponent,
+    MainCardComponent
   },
   data() {
     return {
       categoryList: [
-        { name: "Vegetable", value: 1},
-        { name: "Nut", value: 2},
-        { name: "Grain", value: 3},
-        { name: "Mushroom", value: 4},
-        { name: "Fruit", value: 5},
-        { name: "SeaFood", value: 6},
-        { name: "DriedFish", value: 7},
-        { name: "Meat", value: 8},
-        { name: "MilkProducts", value: 9},
-        { name: "Drink", value: 10}
+        { name: "Vegetable", value: 1 },
+        { name: "Nut", value: 2 },
+        { name: "Grain", value: 3 },
+        { name: "Mushroom", value: 4 },
+        { name: "Fruit", value: 5 },
+        { name: "SeaFood", value: 6 },
+        { name: "DriedFish", value: 7 },
+        { name: "Meat", value: 8 },
+        { name: "MilkProducts", value: 9 },
+        { name: "Drink", value: 10 }
       ]
     };
   },
@@ -142,35 +159,34 @@ export default {
   height: auto;
 }
 
-.category{
+.category {
   width: 100%;
   height: 176px;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
-.category-items{
+.category-items {
   text-align: center;
   position: sticky;
   top: 80px;
   z-index: 100;
 }
 
-.category-item{
-  display:inline-block;
-  text-align:center;
+.category-item {
+  display: inline-block;
+  text-align: center;
   list-style: none;
   width: 100px;
-  margin:0px;
+  margin: 0px;
 }
 
-.category-items-description{
+.category-items-description {
   font-size: 16px;
   line-height: 20px;
   display: grid;
   text-align: center;
   color: #2F3438;
   margin-top: 8px;
-
 }
 
 /* 상품 메인 */
@@ -179,22 +195,26 @@ header {
   position: relative;
   display: block;
 }
+
 a {
   cursor: pointer;
   touch-action: manipulation;
   color: inherit;
   text-decoration: none;
 }
-div{
+
+div {
   margin: 0;
   padding: 0;
 }
+
 .row {
   display: flex;
   flex-wrap: wrap;
   margin-right: -5px;
   margin-left: -5px;
 }
+
 .button {
   user-select: none;
   display: inline-block;
@@ -206,7 +226,7 @@ div{
   font-weight: 700;
   text-decoration: none;
   text-align: center;
-  transition: color .1s,background-color .1s,border-color .1s;
+  transition: color .1s, background-color .1s, border-color .1s;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -223,11 +243,13 @@ div{
   justify-content: center;
 
 }
+
 .body-deadline-item-header {
   margin-bottom: 20px;
   display: flex;
   margin-left: auto;
 }
+
 .body-deadline-item {
   margin-right: auto;
   margin-left: auto;
@@ -237,6 +259,7 @@ div{
   min-height: 1px;
   justify-content: center;
 }
+
 .body-deadline-item-title {
   color: #000;
   font-weight: 700;
@@ -250,6 +273,7 @@ div{
   margin-left: 250px;
   display: block;
 }
+
 .body-deadline-item-link {
   margin-right: 260px;
   color: rgb(24, 204, 60);
@@ -258,6 +282,7 @@ div{
   transition: opacity .1s;
   display: block;
 }
+
 .store-index-div {
   margin-top: 50px;
   /* justify-content: center; */
@@ -268,4 +293,47 @@ div{
   flex-flow: column;
 }
 
+.css-qmz9qs {
+  text-overflow: ellipsis;
+  color: rgb(51, 51, 51);
+  font-size: 30px !important;
+  line-height: 31px;
+  font-weight: 500;
+  display: -webkit-box;
+  //overflow: hidden;
+  word-break: break-all;
+  white-space: normal;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.css-1ytvbby {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.css-46dvfb {
+  text-overflow: ellipsis;
+  font-size: 16px;
+  color: rgb(153, 153, 153);
+  line-height: 18px;
+  margin-top: 4px;
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-all;
+  white-space: normal;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.css-usas7k {
+  padding: 24px 16px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
 </style>
