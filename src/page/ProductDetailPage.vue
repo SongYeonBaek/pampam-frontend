@@ -201,6 +201,7 @@ export default {
         })
 
         this.product = response.data.result;
+        console.log(this.product.filename);
 
         if (response.data.code === 3000) {
           alert(response.data.message);

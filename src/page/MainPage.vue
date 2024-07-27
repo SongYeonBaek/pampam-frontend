@@ -13,7 +13,7 @@
 
   <div class="deadline-product">
     <div class="detail-product-img-wrapper">
-      <Splide :options="{ rewind: true, width: '100%', heightRatio: 0.1947 }">
+      <Splide :options="{ rewind: true, width: '100%', heightRatio: 0.1947 }" class="top-slider">
         <SplideSlide>
           <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/df4bc6da-892e-4793-9bf9-6d809a2dfa77.jpg?w=640" class="css-1jjjg2j" alt="">
         </SplideSlide>
@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="body-deadline-item-list row">
-        <Splide :options="{ perPage: 4, rewind: true, gap: '1rem' }">
+        <Splide :options="{ perPage: 4, perMove: 4, rewind: true, gap: '1rem' }" class="bottom-slider">
           <SplideSlide v-for="product in productStore.productList" :key="product.idx">
             <MainCardComponent v-bind:product="product" />
           </SplideSlide>
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="body-deadline-item-list row">
-        <Splide :options="{ perPage: 4, rewind: true, gap: '1rem' }">
+        <Splide :options="{ perPage: 4, perMove: 4, rewind: true, gap: '1rem' }" class="bottom-slider">
           <SplideSlide v-for="product in productStore.productList" :key="product.idx">
             <MainCardComponent v-bind:product="product" />
           </SplideSlide>
@@ -153,7 +153,7 @@ export default {
     }
   },
   mounted() {
-    this.getProductList(1, 4);
+    this.getProductList(1, 16);
   }
 }
 </script>
@@ -187,6 +187,28 @@ export default {
   height: 100%;
   object-fit: cover; /* 이미지를 슬라이드에 맞게 확대 */
 }
+
+.bottom-slider .splide__arrow {
+  position: absolute;
+  top: 40%; /* 슬라이더의 35% 높이에 위치 */
+  transform: translateY(-50%); /* 위치 조정을 위한 transform 속성 */
+  border-radius: 50%;
+  color: white;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.splide__arrow--prev {
+  left: 10px;
+}
+
+.splide__arrow--next {
+  right: 10px;
+}
+
+
 
 .category {
   margin-top: 30px;
