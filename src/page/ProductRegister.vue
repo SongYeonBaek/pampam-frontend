@@ -108,11 +108,8 @@ export default {
   components: {FooterComponent, HeaderComponent, VueDatePicker},
   methods: {
     async register() {
-      this.product.categoryIdx = this.category2;
-      console.log(this.product.categoryIdx)
-
-      console.log(this.file[0]);
-      console.log(this.file[1]);
+      this.product.productType = this.category2;
+      console.log(this.product.productType)
 
       console.log(this.product);
 
