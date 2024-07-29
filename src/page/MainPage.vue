@@ -145,7 +145,7 @@ export default {
   },
   methods: {
     selectCategory(category) {
-      this.productList = this.categoryStore.getProductListWithCategory(category.name)
+      this.productList = this.categoryStore.getProductListWithCategory(category.value)
     },
 
     async getProductList(page, size) {

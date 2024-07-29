@@ -9,14 +9,9 @@ export const useCategoryStore = defineStore('category', {
         productListWithCategory: []
     }),
     actions: {
-        async getProductListWithCategory(categoryName) {
+        async getProductListWithCategory(categoryIdx) {
             this.productListWithCategory = []
-            let token = localStorage.getItem('accessToken')
-            let response = await axios.get( `${backend}/category/search/type/` + categoryName, {
-                headers: {
-                    Authorization: token
-                }
-            })
+            let response = await axios.get( `${backend}/product/category?categoryIdx=` + categoryIdx)
 
             if (this.productListWithCategory.length > 0) {
                 this.productListWithCategory = []
