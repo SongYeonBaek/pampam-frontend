@@ -6,7 +6,22 @@
           <img src="../assets/pampam-logo.png" width="130px" height="80px" alt="">
         </router-link>
       </div>
-      <div class="center"></div>
+      <div class="center">
+        <div class="css-pqw0uk">
+          <div class="css-w444a2">
+            <input
+                id="gnb_search"
+                placeholder="검색어를 입력해주세요."
+                required=""
+                class="css-11ntk83"
+                v-model="searchInput"
+            >
+            <a :href="'/search/' + searchInput">
+              <button id="submit" aria-label="submit" class="css-ywxmlw"></button>
+            </a>
+          </div>
+        </div>
+      </div>
       <div class="right">
         <div class="right-cart">
           <a @click="handleCartClick">
@@ -63,7 +78,8 @@ export default {
     return {
       token: {},
       showLoginDropdown: false,
-      showSignupDropdown: false
+      showSignupDropdown: false,
+      searchInput: ''
     }
   },
   methods: {
@@ -98,17 +114,18 @@ export default {
 </script>
 
 <style>
-*{
+* {
   font-family: 'GmarketSans';
 }
 
-p{
+p {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
   color: #2F3438;
 }
-a{
+
+a {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
@@ -117,59 +134,95 @@ a{
   cursor: pointer;
 }
 
-p.basic:hover{
-  color:rgb(24, 204, 60);
+p.basic:hover {
+  color: rgb(24, 204, 60);
 }
 
-.header-container{
-  height: 85px;
+.header-container {
+  height: 90px;
   flex-direction: row;
   display: flex;
-  background-color: #F9F9F9;;
-
-
+  background-color: #F9F9F9;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-
-  height: 90px;
   padding: 1rem;
-  color: white;
-  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 999;
 }
 
-.logo{
+.logo {
   width: 130px;
-  height: 90px;
+  height: 80px;
   margin-left: 135px;
-  margin-right:30px;
+  margin-right: 30px;
 }
 
-.center{
+.center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.css-pqw0uk {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.css-w444a2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+  height: 48px;
+  padding-left: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(247, 247, 247) 0px 0px 0px 1px inset;
+}
+
+.css-ywxmlw {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  bottom: 3px;
+  background-image: url("../assets/search.png");
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: 5px 9px;
+  border: none;
+  background-color: #FFF;
+}
+
+.css-11ntk83::placeholder {
+  color: lightgray;
+}
+
+input#gnb_search {
+  border: none;
+  width: 100%;
+}
+
+input#gnb_search:focus {
+  outline:none;
+}
+.right {
   display: flex;
   flex-direction: row;
-  width : 700px;
-  height: 80.75px;
+  align-items: center;
+  width: auto;
 }
 
-.right{
-  display: flex;
-  flex-direction: row;
-  width : 1350px;
-  height: 80.75px;
-  padding-left: 45%;
-}
-
-.right-cart{
-  width : 30px;
-  height : 30px;
+.right-cart {
+  width: 30px;
+  height: 30px;
   margin-left: 15px;
-  margin-top: 18px;
 }
 
 .right-login {
@@ -177,7 +230,7 @@ p.basic:hover{
   width: 70px;
   height: 30px;
   margin-left: 25px;
-  margin-top: 28px;
+  margin-top: 15px;
   padding-left: 8px;
 }
 
@@ -226,11 +279,11 @@ p.basic:hover{
   flex: 1; /* 텍스트가 아이콘 옆에 고르게 정렬되도록 함 */
 }
 
-.right-logout{
-  width : 60px;
-  height : 30px;
+.right-logout {
+  width: 60px;
+  height: 30px;
   margin-left: 15px;
-  margin-top: 28px;
+  margin-top: 15px;
 }
 
 .right-signup {
@@ -238,23 +291,23 @@ p.basic:hover{
   width: 70px;
   height: 30px;
   margin-left: 25px;
-  margin-top: 28px;
+  margin-top: 15px;
   padding-left: 8px;
 }
 
-.right-postWrite{
+.right-postWrite {
   margin-left: 30px;
   margin-top: 17px;
 }
 
-.mybutton{
-  color:white; /* 원하는 색상으로 설정 */
+.mybutton {
+  color: white; /* 원하는 색상으로 설정 */
   text-align: center;
   border-radius: 5px 5px 5px 5px;
   margin-left: -15px;
 }
 
-.mybutton:hover{
+.mybutton:hover {
   background-color: #00ab03;
 }
 </style>
