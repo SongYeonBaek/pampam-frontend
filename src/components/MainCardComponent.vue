@@ -12,26 +12,30 @@
               <img class="image" :src="product.filename[0]" width="220px" height="300px" alt=""/>
               <div class="deadline-item-image-dark-overlay"></div>
               <div class="deadline-item-timer">
-                <div>{{timer}} 남음</div>
+                <div>⏰ {{timer}} </div>
               </div>
             </div>
           </div>
         </div>
         <div class="deadline-item-content">
           <div>
-            <h1 class="deadline-item-header">
-              <span class="deadline-item-header-brand">{{ product.productName }}</span>
-              <span class="deadline-item-header-name">{{ product.productInfo }}</span>
-            </h1>
+            <div class="deadline-item-header">
+<!--              <span class="deadline-item-header-brand">{{ product.productName }}</span>-->
+              <span class="deadline-item-header-name">{{ product.productName }}</span>
+            </div>
+            <div class="product-origin-price">
+              <span> {{formatNumber(product.price)}}원</span>
+            </div>
             <span class="deadline-item-price">
                 <span class="deadline-item-price-rate">
-                    {{Math.floor((product.price - product.salePrice ) / product.price  * 100)}}
-                    <span class="percentage">%</span>
+                    {{Math.floor((product.price - product.salePrice ) / product.price  * 100)}}%
                 </span>
-                <span class="deadline-item-price-price">{{ product.salePrice }} 원</span>
+                <span class="deadline-item-price-price">{{ formatNumber(product.salePrice) }}원</span>
             </span>
-            <div>
-              현재 참여 인원 <span style="font-weight: bold"> {{ product.peopleCount}}명</span>
+            <div class="participate">
+              <span>현재 </span>
+              <span style="font-weight: bold; color: darkred"> {{ product.peopleCount}}명 </span>
+              <span> 이 공동구매에 참여했어요</span>
             </div>
           </div>
         </div>
@@ -66,6 +70,10 @@ export default {
       const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
       this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
+    },
+
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
     }
   },
 
@@ -221,7 +229,6 @@ div{
 @media (min-width: 768px) {
   .deadline-item-image {
     width: auto;
-    margin: 0, -10px;
   }
 }
 
@@ -294,7 +301,8 @@ div{
   align-items: center;
 }
 .deadline-item-header {
-  margin-top: 9px;
+  margin-top: 11px;
+  padding-bottom: 9px;
 }
 .deadline-item-header-brand {
   display: block;
@@ -302,10 +310,10 @@ div{
   color: #828C94;
 }
 .deadline-item-header-name {
-  margin-top: 5px;
-  font-size: 13px;
+
+  font-size: 18px;
   font-weight: 400;
-  line-height: 17px;
+  line-height: 13px;
   max-height: 34px;
   -webkit-line-clamp: 2;
 }
@@ -313,17 +321,15 @@ div{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 23px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .deadline-item-price-rate {
   color: rgb(24, 204, 60);
   margin-right: 4px;
 }
-.percentage {
-  color: rgb(24, 204, 60);
-}
+
 .deadline-item-price-price {
   color: #000;
   margin-right: 4px;
@@ -344,5 +350,18 @@ div{
 
 .image {
   width: 200px;
+  border-radius: 5px;
+}
+
+.participate {
+  margin-top: 4px;
+  font-size: small;
+}
+
+.product-origin-price{
+  color:lightgray;
+  font-size: small;
+  text-decoration: line-through;
+  margin-bottom: 1px;
 }
 </style>

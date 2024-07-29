@@ -3,9 +3,9 @@
     <div class="footer-left">
       <div class="footer-left-top">
         <div class="customer-service-btn">
-          <a class="customer-service-btn" href="#">
+          <div class="customer-service-btn">
             고객센터
-            <i class="fa-solid fa-chevron-right"></i></a>
+            <i class="fa-solid fa-chevron-right"></i></div>
         </div>
         <div class="footer-left-1">
           <div class="phone-number">1670-0876</div>
@@ -27,17 +27,17 @@
     <div class="footer-left-space"></div>
     <div class="footer-middle">
       <div class="footer-middle-grid">
-        <a href="#" target="_self" class="footer-middle-element">회사소개</a>
-        <a href="#" target="_self" class="footer-middle-element">채용정보</a>
-        <a href="#" target="_self" class="footer-middle-element">이용약관</a>
-        <a href="#" target="_self" class="footer-middle-personal-infomation">개인정보 처리방침</a>
-        <a href="#" target="_self" class="footer-middle-element">공지사항</a>
-        <a href="#" target="blank" class="footer-middle-element">안전거래센터</a>
-        <a href="#" target="_self" class="footer-middle-element">입점신청</a>
-        <a href="#" target="_self" class="footer-middle-element">제휴/광고 문의</a>
-        <a href="#" target="_self" class="footer-middle-element">시공파트너 안내</a>
-        <a href="#" target="_self" class="footer-middle-element">상품광고 소개</a>
-        <a href="#" target="_self" class="footer-middle-element">고객의 소리</a>
+        <div target="_self" class="footer-middle-element">회사소개</div>
+        <div target="_self" class="footer-middle-element">채용정보</div>
+        <div target="_self" class="footer-middle-element">이용약관</div>
+        <div target="_self" class="footer-middle-element">개인정보 처리방침</div>
+        <div target="_self" class="footer-middle-element">공지사항</div>
+        <div target="blank" class="footer-middle-element">안전거래센터</div>
+        <div target="_self" class="footer-middle-element">입점신청</div>
+        <div target="_self" class="footer-middle-element">제휴/광고 문의</div>
+        <div target="_self" class="footer-middle-element">시공파트너 안내</div>
+        <div target="_self" class="footer-middle-element">상품광고 소개</div>
+        <div target="_self" class="footer-middle-element">고객의 소리</div>
       </div>
     </div>
     <div class="footer-right-space"></div>
@@ -50,7 +50,7 @@
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation">|</span>
-            대표이사
+            대표이사 양호신 백송연
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation"></span>
@@ -58,13 +58,13 @@
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation"></span>
-            <a href="#">test01@test.com</a>
+            <div href="#">test01@test.com</div>
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation">|</span>
             <span>사업자등록번호 119-86-91245</span>
-            <a target="_blank" href="#" rel="noreferrer" class="business-number">
-              사업자정보확인</a>
+            <div target="_blank" href="#" rel="noreferrer" class="business-number">
+              사업자정보확인</div>
           </div>
           <div class="footer-right-1-1-element">
             <span class="footer-right-1-1-element-infomation"></span>
@@ -74,7 +74,7 @@
       </div>
       <div>
         <span>고객님이 현금결제한 금액에 대해 우리은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.</span>
-        <a target="_blank" href="#" rel="noreferrer" class="css-kkzzbm">서비스가입사실확인</a>
+        <div target="_blank" href="#" rel="noreferrer" class="css-kkzzbm">서비스가입사실확인</div>
       </div>
       <div class="footer-right-3">
         <div class="footer-right-3-icon">
@@ -108,10 +108,17 @@ export default {
   font-family: sans-serif;
 
 }
-a{
-  text-decoration: none;
+
+a {
+  color: #828C94;
+  text-decoration: none; /* 링크의 밑줄을 제거 */
+}
+
+body {
+  font-family: Arial, sans-serif; /* 기본 폰트를 Arial로 설정, Arial이 없는 경우 sans-serif 사용 */
 }
 .footer{
+  margin-top: 100px;
   padding: 40px 40px;
   background-color: #e8e9ea;
   box-sizing: border-box;
@@ -120,7 +127,7 @@ a{
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 2fr;
   grid-column-gap: 30px;
-
+  color: #828C94;
 }
 
 .customer-service-btn{
@@ -136,9 +143,7 @@ a{
 .customer-service-btn:active{
   color: black;
 }
-.customer-service-btn:hover{
-  text-decoration: underline;
-}
+
 
 .footer-left-top-1{
   margin-top: 10px;
@@ -160,9 +165,7 @@ a{
 .phone-number:active{
   color: blue;
 }
-.phone-number:hover{
-  text-decoration: underline;
-}
+
 
 .footer-left-middle{
   font-size: 10px;
@@ -215,7 +218,6 @@ a{
   display: flex;
   gap: 12px;
   flex-direction: column;
-  margin-top: 12px\y;
 }
 .footer-left-bottom-counseling-btn{
   display: flex;
@@ -257,8 +259,6 @@ a{
   text-align: center;
   color: #2F3438;
   border: 1px solid #DADDE0;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
   text-decoration: none;
@@ -274,37 +274,13 @@ a{
 .footer-middle-element{
   text-decoration: none;
 }
-.footer-middle-element:visited{
-  color: purple;
-}
-.footer-middle-element:link{
-  color: black;
-}
-.footer-middle-element:active{
-  color: blue;
-}
-.footer-middle-element:hover{
-  text-decoration: underline;
-}
+
 .footer-middle-personal-infomation{
   text-decoration: none;
   font-weight: 700;
 }
-.footer-middle-personal-infomation:link{
-  color:black;
-}
-.footer-middle-personal-infomation:visited{
-  color: purple;
-}
-.footer-middle-personal-infomation:active{
-  color: blue;
-}
-.footer-middle-personal-infomation:hover{
-  text-decoration: underline;
 
-}
 .footer-right{
-
 
   font-size: 10px;
   line-height: 14px;
