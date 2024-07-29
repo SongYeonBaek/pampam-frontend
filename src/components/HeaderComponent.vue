@@ -23,6 +23,11 @@
         </div>
       </div>
       <div class="right">
+        <div v-show="token.authority === 'CONSUMER'" class="right-mypage">
+          <router-link to="/mypage">
+            <i  style="padding-top: 11px;" class="fa-solid fa-user"></i>
+          </router-link>
+        </div>
         <div class="right-cart">
           <a @click="handleCartClick">
             <i style="padding-top: 11px;" class="fa-solid fa-cart-shopping"></i>
@@ -74,6 +79,7 @@ import VueJwtDecode from "vue-jwt-decode";
 
 export default {
   name: 'HeaderComponent',
+
   data() {
     return {
       token: {},
@@ -220,6 +226,12 @@ input#gnb_search:focus {
 }
 
 .right-cart {
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+}
+
+.right-mypage {
   width: 30px;
   height: 30px;
   margin-left: 15px;

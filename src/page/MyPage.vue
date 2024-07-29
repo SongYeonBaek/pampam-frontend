@@ -1,9 +1,9 @@
 <template>
   <HeaderComponent></HeaderComponent>
-  <div class="cart">
-    <div class="cart-left">
-      <div class="sticky-child commerce-cart__header">
-        <span class="commerce-cart__header__left">
+  <div class="mypage">
+    <div class="mypage-left">
+      <div class="sticky-child commerce-mypage__header">
+        <span class="commerce-mypage__header__left">
           <label class="_3xqzr _4VN_z">
             <div class="_3zqA8">
               <span class="_2mDYR">
@@ -14,24 +14,25 @@
               </span>
             </div>
             <span class="_1aN3J">
-              <span class="commerce-cart__header__caption" style="padding-left: 8px;">주문한 상품 목록</span>
+              <span class="commerce-mypage__header__caption" style="padding-left: 8px;">주문한 상품 목록</span>
             </span>
           </label>
         </span>
       </div>
-      <ul class="commerce-cart__content__group-list">
-        <li class="commerce-cart__content__group-item">
-          <article class="commerce-cart-group">
-            <h1 class="commerce-cart__group__header">주식회사 두레샘<!-- --> 배송</h1>
-<!--            <CartCardComponent v-for="product in cartStore.productList" :key="product.id" v-bind:product="product" />-->
+      <ul class="commerce-mypage__content__group-list">
+        <li class="commerce-mypage__content__group-item">
+          <article class="commerce-mypage-group">
+            <h1 class="commerce-mypage__group__header">주식회사 두레샘<!-- --> 배송</h1>
+<!--            <mypageCardComponent v-for="product in mypageStore.productList" :key="product.id" v-bind:product="product" />-->
+            <OrderCardComponent></OrderCardComponent>
           </article>
         </li>
       </ul>
     </div>
-    <div class="cart-right">
-      <dl class="commerce-cart__summary commerce-cart__side-bar__summary">
-        <div class="commerce-cart__summary__row">
-          <dt>님</dt>
+    <div class="mypage-right">
+      <dl class="commerce-mypage__summary commerce-mypage__side-bar__summary">
+        <div class="commerce-mypage__summary__row">
+          <dt>반갑습니다! {{memberStore.token.email}}님</dt>
         </div>
       </dl>
     </div>
@@ -43,14 +44,20 @@
 
 import {defineComponent} from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import {useMemberStore} from "@/stores/useMemberStore";
+import {mapStores} from "pinia";
+import OrderCardComponent from "@/components/OrderCardComponent.vue";
 // import FooterComponent from "@/components/FooterComponent.vue";
 
-/**
- * My-page에 들어가야되는 정보
- * 1. 이름
- */
 export default defineComponent({
-  components: {HeaderComponent}
+  components: {HeaderComponent, OrderCardComponent},
+  computed: {
+    ...mapStores(useMemberStore)
+  },
+  mounted() {
+    this.memberStore.showData()
+    console.log(this.memberStore.token.email)
+  }
 })
 </script>
 
@@ -74,8 +81,8 @@ p.basic:hover {
   color: rgb(24, 204, 60);
 }
 
-.cart {
-  padding-top: 20px;
+.mypage {
+  padding-top: 350px;
   position: absolute;
   background-color: #f5f5f5;
   /* flex: 1 0 auto; */
@@ -84,8 +91,8 @@ p.basic:hover {
   /* height: 1000px; */
 }
 
-/* cart-right */
-.cart-right {
+/* mypage-right */
+.mypage-right {
   width: 25%;
   background-color: #f5f5f5;
   float: right;
@@ -93,7 +100,7 @@ p.basic:hover {
   margin-top: 60px;
 }
 
-.commerce-cart__side-bar__summary {
+.commerce-mypage__side-bar__summary {
   margin: 0 0 20px;
   border: 1px solid #ededed;
   border-radius: 6px;
@@ -101,7 +108,7 @@ p.basic:hover {
   padding: 10px 20px;
 }
 
-.commerce-cart__summary__row {
+.commerce-mypage__summary__row {
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -124,11 +131,11 @@ li {
   text-align: -webkit-match-parent;
 }
 
-.commerce-cart__content__group-list {
+.commerce-mypage__content__group-list {
   list-style: none;
 }
 
-.commerce-cart__side-bar__order__btn {
+.commerce-mypage__side-bar__order__btn {
   background-color: rgb(24, 204, 60);
   border-color: rgb(30, 199, 64);
   color: #fff;
@@ -141,26 +148,26 @@ li {
   min-height: 50px;
 }
 
-.commerce-cart__summary__row {
+.commerce-mypage__summary__row {
   font-size: 15px;
   font-weight: 400;
   color: #424242;
 }
 
-.commerce-cart__summary__row>dd {
+.commerce-mypage__summary__row>dd {
   font-weight: 700;
   text-align: right;
 }
 
-/* cart-left */
-.cart-left {
+/* mypage-left */
+.mypage-left {
   width: 40%;
   background-color: #f5f5f5;
   float: left;
   margin-left: 15%;
 }
 
-.commerce-cart__header {
+.commerce-mypage__header {
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -212,8 +219,8 @@ li {
   width: 100%;
 }
 
-.commerce-cart__header__delete,
-.commerce-cart__header__delete-sold-out {
+.commerce-mypage__header__delete,
+.commerce-mypage__header__delete-sold-out {
   display: inline-block;
   margin: 2px -3px 0;
   padding: 3px;
@@ -234,7 +241,7 @@ li {
   padding: 9px;
 }
 
-.commerce-cart__group__header {
+.commerce-mypage__group__header {
   padding: 10px 0;
   border-bottom: 1px solid #ededed;
   font-size: 12px;
@@ -274,7 +281,7 @@ li {
   line-height: 16px;
 }
 
-.carted-product .product-small-item {
+.mypageed-product .product-small-item {
   margin: 0 20px 12px 0;
 }
 
@@ -323,7 +330,7 @@ a {
   text-decoration: none;
 }
 
-.carted-product__subtotal {
+.mypageed-product__subtotal {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
   -moz-box-flex: 0;
