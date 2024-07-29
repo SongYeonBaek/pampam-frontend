@@ -29,6 +29,11 @@
             <button class="mybutton" style="background-color:rgb(24, 204, 60); border-color: rgb(30, 199, 64); border-width: 1px; width: 91px; height: 45px;">상품 등록</button>
           </router-link>
         </div>
+        <div v-show="token.authority === 'CONSUMER'" class="right-postWrite">
+          <router-link to="/mypage">
+            <button class="mybutton" style="background-color:rgb(24, 204, 60); border-color: rgb(30, 199, 64); border-width: 1px; width: 91px; height: 45px;">상품 등록</button>
+          </router-link>
+        </div>
       </div>
     </div>
     <div style="align-content: center" class="header-sub">
