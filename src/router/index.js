@@ -10,7 +10,8 @@ import ProductRegister from "@/page/ProductRegister.vue";
 import OrderCompletePage from "@/page/OrderCompletePage.vue";
 import SellerSignUpPage from "@/page/SellerSignUpPage.vue";
 import SellerLoginPage from "@/page/SellerLoginPage.vue";
-import MyPage from "@/page/MyPage.vue";
+import SearchResultPage from "@/page/SearchResultPage.vue";
+
 
 const router = createRouter({
     history: createWebHistory('/'),
@@ -25,7 +26,8 @@ const router = createRouter({
         { path: '/product/read/:productIdx', component: ProductDetailPage },
         { path: '/product/register', component: ProductRegister },
         { path: '/order/complete', component: OrderCompletePage },
-        { path: '/mypage', component: MyPage },
+        { path: "/search/:keyword", name: "SearchResult", component: SearchResultPage, props: true},
+
     ]
 })
 
