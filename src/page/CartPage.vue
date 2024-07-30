@@ -165,7 +165,7 @@ p.basic:hover {
 }
 
 .cart {
-  padding-top: 20px;
+  margin-top: 60px;
   position: absolute;
   background-color: #f5f5f5;
   width: 100%;
@@ -396,6 +396,7 @@ li {
   line-height: 21px;
   overflow-wrap: break-word;
   transition: opacity 0.1s;
+  display: flex;
 }
 
 .css-w0e4y9 {
