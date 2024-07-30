@@ -12,7 +12,7 @@
         <p>주문번호: {{order.impUid}}</p>
         <p>주문일시: {{order.orderDate}}</p>
         <p>상품 이름: {{order.productName}}</p>
-        <p>총 결제금액: </p>
+        <p>총 결제금액: {{formatNumber(order.amount)}}원 </p>
       </div>
       <div class="confirmation-message">
         <p>주문이 성공적으로 완료되었습니다. 감사합니다!</p>
@@ -51,12 +51,17 @@ export default {
       })
 
       let result = response.data.result;
-      console.log(result[0].impUid);
+
       this.order.impUid = result[0].impUid;
       this.order.orderDate = result[0].orderDate;
       this.order.productName = result[0].productName;
       this.order.amount = result[0].amount;
+    },
+
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
     }
+
   },
   mounted() {
     this.getOrderList();
@@ -116,9 +121,8 @@ body {
 }
 
 
-
 .content-container {
-  max-width: 400px;
+  max-width: 60%;
   width: 100%;
   text-align: center;
   padding: 20px;
