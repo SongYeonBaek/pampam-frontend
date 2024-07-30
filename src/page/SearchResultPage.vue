@@ -31,7 +31,6 @@ const backend = process.env.VUE_APP_ENDPOINT;
 
 onMounted(async () => {
   keyword.value = route.params.keyword; // URL에서 keyword를 가져와서 설정
-  console.log(keyword.value);
   // 검색 결과를 받아오는 비동기 함수 호출
   await fetchSearchResults(keyword.value);
 });
@@ -47,7 +46,7 @@ async function fetchSearchResults(keyword) {
     // JSON 형식으로 응답 데이터 변환
     const data = await response.json();
     // 가져온 검색 결과를 상태에 저장
-    products.value = data;
+    products.value = data.result;
     console.log(products.value);
   } catch (error) {
     console.error('검색 결과를 가져오는 중 오류가 발생했습니다:', error);

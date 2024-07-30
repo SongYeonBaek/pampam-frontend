@@ -44,7 +44,7 @@
       </article>
     </li>
     <footer class="commerce-cart__delivery-group__footer">
-      <p class="commerce-cart__delivery-group__total">배송비 무료</p>
+      <div class="commerce-cart__delivery-group__total">배송비 무료</div>
     </footer>
   </ul>
 </template>
@@ -170,6 +170,7 @@ export default {
   margin-top: 16px;
 }
 
+
 .carted-product__footer__left {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
@@ -213,7 +214,7 @@ export default {
 .commerce-cart__delivery-group__footer {
   padding: 3px;
   font-size: 12px;
-  line-height: 15px;
+  line-height: 17px;
   text-align: center;
   color: #424242;
 }
@@ -227,5 +228,11 @@ export default {
   margin-bottom: 12px;
   font-size: 12px;
   line-height: 16px;
+}
+
+.commerce-cart__delivery-group__total {
+  font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>
