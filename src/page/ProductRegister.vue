@@ -45,7 +45,12 @@
 
       <div class="insertnick"><h5>공동구매 마감 시간 </h5></div>
       <div class="insertnick2">공동구매 마감 시간을 설정해주세요.</div>
-      <VueDatePicker :format="resultDate" v-model="deadLine" range max-range="7" placeholder="마감 시간 설정"/>
+      <DatePicker
+          :format="resultDate"
+          v-model="deadLine"
+          locale="ko"
+          :enable-time-picker="false"
+          auto-apply/>
       <br>
     </form>
     <div class="insertnick"><h5>공동구매 참여 인원 수 </h5></div>
@@ -59,6 +64,7 @@
     </div>
     <br>
     <button type="submit" class="product-container-button" @click="register">상품 등록하기</button>
+    <button type="submit" class="product-container-button" @click="register">상품 등록하기</button>
   </div>
 <FooterComponent/>
 </template>
@@ -66,9 +72,10 @@
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
-import VueDatePicker from '@vuepic/vue-datepicker';
+import DatePicker from '@vuepic/vue-datepicker';
 
 import '@vuepic/vue-datepicker/dist/main.css'
+
 import axios from "axios";
 const backend = process.env.VUE_APP_ENDPOINT
 
@@ -105,7 +112,7 @@ export default {
       file: [],
     }
   },
-  components: {FooterComponent, HeaderComponent, VueDatePicker},
+  components: {FooterComponent, HeaderComponent, DatePicker},
   methods: {
     async register() {
       this.product.productType = this.category2;
