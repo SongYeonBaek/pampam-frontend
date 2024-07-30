@@ -1,4 +1,5 @@
 <template>
+  <HeaderComponent></HeaderComponent>
   <div class="order-container">
     <div class="content-container">
       <div class="text-with-image">
@@ -9,10 +10,22 @@
       </div>
       <hr class="line">
       <div class="order-details">
-        <p>주문번호: {{order.impUid.split("_")[1]}}</p>
-        <p>주문일시: {{order.orderDate}}</p>
-        <p>상품 이름: {{order.productName}}</p>
-        <p>총 결제금액: {{formatNumber(order.amount)}}원 </p>
+        <div class="order-detail-item">
+          <div class="label">주문번호:</div>
+          <div class="value">{{ order.impUid.split("_")[1] }}</div>
+        </div>
+        <div class="order-detail-item">
+          <div class="label">주문일시:</div>
+          <div class="value">{{ order.orderDate }}</div>
+        </div>
+        <div class="order-detail-item">
+          <div class="label">상품 이름:</div>
+          <div class="value">{{ order.productName }}</div>
+        </div>
+        <div class="order-detail-item">
+          <div class="label">총 결제금액:</div>
+          <div class="value">{{ formatNumber(order.amount) }}원</div>
+        </div>
       </div>
       <div class="confirmation-message">
         <p>주문이 성공적으로 완료되었습니다. 감사합니다!</p>
@@ -24,14 +37,19 @@
       </div>
     </div>
   </div>
+
+  <FooterComponent></FooterComponent>
 </template>
 
 <script>
 import axios from "axios";
-const backend = process.env.VUE_APP_ENDPOINT
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+const backend = process.env.VUE_APP_ENDPOINT;
 
 export default {
   name: "OrderCompletePage",
+  components: {FooterComponent, HeaderComponent},
   data() {
     return {
       order: {
@@ -40,28 +58,33 @@ export default {
         productName: "",
         amount: 0
       }
-    }
-  }, methods: {
+    };
+  },
+  methods: {
     async getOrderList() {
-      let token = localStorage.getItem("accessToken");
-      let response = await axios.get(`${backend}/order/list`, {
-        headers: {
-          Authorization: token
+      try {
+        let token = localStorage.getItem("accessToken");
+        let response = await axios.get(`${backend}/order/list`, {
+          headers: {
+            Authorization: token
+          }
+        });
+
+        let result = response.data.result;
+        if (result.length > 0) {
+          this.order.impUid = result[0].impUid;
+          this.order.orderDate = result[0].orderDate;
+          this.order.productName = result[0].productName;
+          this.order.amount = Number(result[0].amount); // Ensure amount is a number
         }
-      })
-
-      let result = response.data.result;
-
-      this.order.impUid = result[0].impUid;
-      this.order.orderDate = result[0].orderDate;
-      this.order.productName = result[0].productName;
-      this.order.amount = result[0].amount;
+      } catch (error) {
+        console.error("Error fetching order list:", error);
+      }
     },
 
     formatNumber(value) {
       return new Intl.NumberFormat().format(value);
     }
-
   },
   mounted() {
     this.getOrderList();
@@ -70,7 +93,6 @@ export default {
 </script>
 
 <style>
-
 body {
   background-color: #F9F9F9;
   margin: 0;
@@ -79,91 +101,88 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin-bottom: 50px;
   width: 100%;
 }
+
 .order-container {
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 20px;
 }
-.text-with-image {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0px;
-  text-align: center;
-  top: 15px; /* 화면 상단에 정렬 */
-  left: 10px; /* 화면 왼쪽에 정렬 */
-  padding: 0px; /* 간격 조절 */
-  z-index: 1000; /* 다른 요소들보다 위에 표시되도록 설정 */
-  color: #494949;
-  font-size: 14px;
-  justify-content: center;
-}
-.text-with-image img {
-  width: 130px;
-  height: auto;
-  margin-right: -15px;
-  margin-left: -30px;
-  border-radius: 20%;
-}
-.order-container h2 {
-  color: #333;
-}
-.order-container input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 0px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 
 .content-container {
   max-width: 60%;
   width: 100%;
-  text-align: center;
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  text-align: left;
 }
-.content-container a {
+
+.text-with-image {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.text-with-image img {
+  width: 130px;
+  height: auto;
+  margin-right: 15px;
+  border-radius: 20%;
+}
+
+.order-container h2 {
   color: #333;
-  text-decoration: none;
-  margin: 0 10px;
-  font-size: 12px;
+  margin: 0;
 }
 
 .line {
   margin-top: 20px;
   border: 1px solid #ccc;
-  height: 0px;
+  height: 1px;
   background-color: #C2C8CC;
+  width: 100%;
 }
 
-a {
-  color: #333;
-  text-decoration: none;
-  transition: color 0.3s; /* 컬러 전환에 대한 트랜지션 효과 추가 */
-}
-a:hover {
-  color: #00AB03; /* 호버 시의 컬러 변경 */
-}
 .order-details {
-  text-align: left;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  width: 50%; /* Full width of its parent */
+  margin: 20px 0;
 }
-.order-details p {
-  margin: 10px 0;
+
+.order-detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  font-weight: normal;
+}
+
 .confirmation-message {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
+  text-align: center; /* Center the text inside the message */
 }
+
+.additional-actions {
+  text-align: center; /* Center the button inside the container */
+}
+
 .additional-actions a {
   display: inline-block;
   background-color: #4CAF50;
@@ -173,7 +192,18 @@ a:hover {
   border-radius: 5px;
   margin-right: 10px;
 }
+
 .additional-actions a:hover {
   background-color: #45A049;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #00AB03;
 }
 </style>
