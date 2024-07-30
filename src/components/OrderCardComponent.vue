@@ -2,49 +2,52 @@
   <ul class="commerce-order__group__item-list">
     <li class="commerce-order__delivery-group__product-item">
       <article class="ordered-product">
-<!--        <div class="ordered-product__select">-->
-<!--          <div class="_3zqA8">-->
-<!--&lt;!&ndash;            <input type="checkbox" class="_3UImz" value="" :checked="product.isChecked" @change="checkProduct">&ndash;&gt;-->
-<!--            <span class="_2mDYR">-->
-<!--              <svg-->
-<!--                  width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">-->
-<!--                <path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z">-->
-<!--                </path>-->
-<!--              </svg>-->
-<!--            </span>-->
-<!--          </div>-->
-<!--        </div>-->
-
         <!--여기에 남은 시간 보여주면 좋을 듯-->
-        <span class="css-17x2thm elsmzm01">남은 마감시간: <span class="afterDeadLine css-1xskdmv elsmzm00">03시30분
-            예정</span></span>
+        <span class="css-17x2thm elsmzm01">남은 마감시간: <span class="afterDeadLine css-1xskdmv elsmzm00">{{ timer }}</span></span>
         <a class="product-small-item product-small-item--clickable" href="/productions/1803860/selling">
           <div class="product-small-item__image">
             <picture>
               <!--여기에 상품 사진???-->
-<!--              <img alt="상품 이미지" :src="product.image">-->
-
+              <img alt="상품 이미지" :src="order.filename">
             </picture>
           </div>
           <div class="product-small-item__content">
-<!--            <h1 class="product-small-item__title">{{ product.productName }}</h1>-->
+            <h1 class="product-small-item__title">{{ order.productName }}</h1>
             <p class="css-w0e4y9 e1xep4wb1">무료배송&nbsp;|&nbsp;일반택배</p>
           </div>
+          <div style="width: 70%">
+          <LvProgressBar :value="value" color="#38b2ac"/>
+          </div>
         </a>
-<!--        <button class="ordered-product__delete" type="button" aria-label="삭제"><svg width="12" height="12"-->
-<!--                                                                                  viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">-->
-<!--          <path fill-rule="nonzero"-->
-<!--                d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z">-->
-<!--          </path>-->
-<!--        </svg></button>-->
+        <div>
+          <v-btn icon="$vuetify" color="warning" height="30" width="30">
+            <v-tooltip activator="parent" location="bottom" height="30">주문 진행 중</v-tooltip>
+          </v-btn>
+        </div>
+<!--        <div v-show="order.status === 0">-->
+<!--          <v-btn icon="$vuetify" color="warning" height="30" width="30">-->
+<!--            <v-tooltip activator="parent" location="bottom" height="30">주문 진행 중</v-tooltip>-->
+<!--          </v-btn>-->
+<!--        </div>-->
+<!--        <div v-show="order.status === 1">-->
+<!--          <v-btn icon="$vuetify" color="error" height="30" width="30">-->
+<!--            <v-tooltip activator="parent" location="bottom" height="30">결재 취소됨</v-tooltip>-->
+<!--          </v-btn>-->
+<!--        </div>-->
+<!--        <div v-show="order.status === 2">-->
+<!--          <v-btn icon="$vuetify" color="success" height="30" width="30">-->
+<!--            <v-tooltip activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>-->
+<!--          </v-btn>-->
+<!--        </div>-->
+
         <!-- order-footer -->
         <div class="ordered-product__footer">
           <span class="ordered-product__footer__left">
-            <button class="ordered-product__edit-btn" type="button">구매 취소</button>
-            <button class="ordered-product__order-btn" type="button">바로구매</button>
+<!--            <v-btn @click="orderCancel(order.impUid)" class="ordered-product__edit-btn" height="40" width="60">구매 취소</v-btn>-->
+            <button  type="button">구매 취소</button>
           </span>
           <span class="ordered-product__subtotal">
-<!--          <span class="ordered-product__subtotal__number">{{ product.salePrice }}</span>-->
+          <span class="ordered-product__subtotal__number">{{ order.salePrice }}</span>
           원</span>
         </div>
       </article>
@@ -56,8 +59,57 @@
 </template>
 
 <script>
+import LvProgressBar from 'lightvue/progress-bar'
 export default {
-  name: 'OrderCardComponent'
+  name: 'OrderCardComponent',
+  data() {
+    return {
+      value: 0,
+      count: 10,
+      timer: new Date().toLocaleTimeString(),
+    }
+  },
+  props: [
+    'order'
+  ],
+  interval: null,
+  methods: {
+    startProgress() {
+      this.interval = setInterval(() => {
+        let newValue = (this.order.peopleCount / 10) * 100
+        // let newValue = (this.order.peopleCount / this.order.totalPeople) * 100
+        if (newValue >= 100) {
+          newValue = 0;
+        }
+        this.value = newValue
+      }, 100)
+    },
+    update() {
+      const now = new Date();	// 현재 날짜 및 시간
+      // const close = new Date(this.order.closeAt)
+      const close = new Date('2024-8-30');
+      const timeDifference  = new Date(close - now);
+
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
+    },
+
+    // TODO: 주문 취소 구현
+    /*async orderCancel(impUid) {
+      this.orderStroe.orderCancel(impUid)
+    }*/
+  },
+  mounted() {
+    this.startProgress()
+    setInterval(this.update, 1000)
+  },
+  components: {
+    LvProgressBar: LvProgressBar
+  }
 }
 </script>
 
