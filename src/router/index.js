@@ -11,6 +11,7 @@ import OrderCompletePage from "@/page/OrderCompletePage.vue";
 import SellerSignUpPage from "@/page/SellerSignUpPage.vue";
 import SellerLoginPage from "@/page/SellerLoginPage.vue";
 import SearchResultPage from "@/page/SearchResultPage.vue";
+import MyPage from "@/page/MyPage.vue";
 
 
 const router = createRouter({
@@ -26,8 +27,8 @@ const router = createRouter({
         { path: '/product/read/:productIdx', component: ProductDetailPage },
         { path: '/product/register', component: ProductRegister },
         { path: '/order/complete', component: OrderCompletePage },
-        { path: "/search/:keyword", name: "SearchResult", component: SearchResultPage, props: true},
-
+        { path: '/search/:keyword', name: 'SearchResult', component: SearchResultPage, props: true},
+        { path: '/mypage', component: MyPage },
     ]
 })
 
