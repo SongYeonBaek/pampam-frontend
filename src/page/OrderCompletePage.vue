@@ -9,7 +9,7 @@
       </div>
       <hr class="line">
       <div class="order-details">
-        <p>주문번호: {{order.impUid}}</p>
+        <p>주문번호: {{order.impUid.split("_")[1]}}</p>
         <p>주문일시: {{order.orderDate}}</p>
         <p>상품 이름: {{order.productName}}</p>
         <p>총 결제금액: {{formatNumber(order.amount)}}원 </p>
