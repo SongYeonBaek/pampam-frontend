@@ -22,9 +22,9 @@
       <ul class="commerce-mypage__content__group-list">
         <li class="commerce-mypage__content__group-item">
           <article class="commerce-mypage-group">
-            <h1 class="commerce-mypage__group__header">주식회사 두레샘<!-- --> 배송</h1>
+            <h1 class="commerce-mypage__group__header">공동구매 인원이 모두 모여야 최종 주문이 완료 됩니다 :)</h1>
 <!--            <mypageCardComponent v-for="product in mypageStore.productList" :key="product.id" v-bind:product="product" />-->
-            <OrderCardComponent></OrderCardComponent>
+            <OrderCardComponent v-for="order in orderStore.orderList" :key="order.impUid" v-bind:order="order"></OrderCardComponent>
           </article>
         </li>
       </ul>
@@ -33,6 +33,9 @@
       <dl class="commerce-mypage__summary commerce-mypage__side-bar__summary">
         <div class="commerce-mypage__summary__row">
           <dt>반갑습니다! {{memberStore.token.email}}님</dt>
+          <v-avatar color="grey" size="180">
+            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+          </v-avatar>
         </div>
       </dl>
     </div>
@@ -42,23 +45,27 @@
 
 <script>
 
-import {defineComponent} from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import {useMemberStore} from "@/stores/useMemberStore";
 import {mapStores} from "pinia";
 import OrderCardComponent from "@/components/OrderCardComponent.vue";
-// import FooterComponent from "@/components/FooterComponent.vue";
+import {useOrderStore} from "@/stores/useOrderStore";
 
-export default defineComponent({
+export default {
   components: {HeaderComponent, OrderCardComponent},
   computed: {
-    ...mapStores(useMemberStore)
+    ...mapStores(useMemberStore, useOrderStore)
+  },
+  methods: {
+    async getOrderedList() {
+      this.orderStore.getOrderList()
+    }
   },
   mounted() {
     this.memberStore.showData()
-    console.log(this.memberStore.token.email)
+    this.getOrderedList();
   }
-})
+}
 </script>
 
 <style>
