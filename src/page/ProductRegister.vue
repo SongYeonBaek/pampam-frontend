@@ -1,6 +1,7 @@
 <template>
   <HeaderComponent/>
   <div class="product-container">
+    <div style="font-size: 20px; margin-bottom:60px; margin-top: 50px;"> 공동구매 상품 등록</div>
     <form id="product-Register-Form">
       <div class="insertImg">
         <h5>상품 사진</h5>
@@ -185,8 +186,7 @@ body {
   border-radius: 8px;
   width: 40%;
   text-align: center;
-  margin-top: 20px; /* 이미지와 로고에 겹치지 않도록 여백 추가 */
-  margin: 0 auto;
+  margin: 90px auto;
 }
 
 .text-with-image img {
@@ -249,9 +249,11 @@ body {
   cursor: pointer;
 }
 
+/*
 .product-container button:hover {
   background-color: #00ab03;
 }
+*/
 
 .content-container a {
   color: #333;
@@ -312,9 +314,9 @@ body {
 }
 
 .seller-img{
-  height: 300px;
+  height: 200px;
   background-color: rgb(227, 228, 228);
-  border-radius: 10px;
+  border-radius: 40px;
   margin-bottom: 50px;
   align-items: center;
   text-align: center;
@@ -366,6 +368,7 @@ body {
   margin-top: 15px;
   width: 200px;
   text-align: center;
+  border-radius: 40px;
 }
 
 </style>
