@@ -18,8 +18,8 @@
     <div class="production-selling">
     <div class="production-selling-overview container">
         <img class="production-selling-cover-image__entry__image" :src="product.filename" alt="">
-        <div class="deadline-item-image-dark-overlay"></div>
-        <div class="deadline-item-timer">
+        <div class="deadline-item-image-dark-overlay-2"></div>
+        <div class="deadline-item-timer-2">
           <div>⏰ {{timer}} </div>
         </div>
     </div>
@@ -735,7 +735,7 @@ div {
   color:gray;
 }
 
-.deadline-item-image-dark-overlay {
+.deadline-item-image-dark-overlay-2 {
   position: absolute;
   top: 0;
   left: 0;
@@ -744,7 +744,7 @@ div {
   transition: background-color .2s;
 }
 
-.deadline-item-timer {
+.deadline-item-timer-2 {
   position: absolute;
   z-index: 3;
   background-color: rgb(24, 204, 60);
