@@ -119,8 +119,8 @@ body {
 }
 .footer{
   margin-top: 100px;
-  padding: 40px 40px;
-  background-color: #e8e9ea;
+  padding: 40px 210px;
+  background-color: #f9f9f9;
   box-sizing: border-box;
   font-size: 12px;
   line-height: 16px;

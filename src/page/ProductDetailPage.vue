@@ -1,33 +1,28 @@
 <template>
   <HeaderComponent/>
-  <div class="production-selling">
+  <nav class="commerce-category-breadcrumb-wrap production-selling-overview__category" style="margin-top:90px;">
+    <ol class="commerce-category-breadcrumb">
+      <li class="commerce-category-breadcrumb__entry">
+        <a class="link" href="/store/category?category_id=28000000&amp;affect_type= ProductSaleDetail&amp;affect_id=672428">카테고리</a>
+        <svg class="icon" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" preserveAspectRatio="xMidYMid meet">
+          <path d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z">
+          </path>
+        </svg>
+      </li>
+      <li class="commerce-category-breadcrumb__entry">
+        <a class="link" href="/store/category?category_id=28050000&amp;affect_type= ProductSaleDetail&amp;affect_id=672428">{{ product.productName }}</a>
+      </li>
+    </ol>
+  </nav>
+  <div class="product">
+    <div class="production-selling">
     <div class="production-selling-overview container">
-      <nav class="commerce-category-breadcrumb-wrap production-selling-overview__category">
-        <ol class="commerce-category-breadcrumb">
-          <li class="commerce-category-breadcrumb__entry">
-            <a class="link" href="/store/category?category_id=28000000&amp;affect_type= ProductSaleDetail&amp;affect_id=672428">카테고리</a>
-            <svg class="icon" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" preserveAspectRatio="xMidYMid meet">
-              <path d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z">
-              </path>
-            </svg>
-          </li>
-          <li class="commerce-category-breadcrumb__entry">
-            <a class="link" href="/store/category?category_id=28050000&amp;affect_type= ProductSaleDetail&amp;affect_id=672428">{{ product.productName }}</a>
-          </li>
-        </ol>
-      </nav>
-      <div class="production-selling-overview__container row">
-        <div class="production-selling-overview__cover-image-wrap col-12 col-md-6 col-lg-7">
-          <div class="production-selling-cover-image-container">
-            <div class="carousel production-selling-cover-image production-selling-overview__cover-image" role="region" aria-roledescription="carousel">
-              <div class="carousel__list-wrap production-selling-cover-image__carousel-wrap">
-                <img class="production-selling-cover-image__entry__image" :src="product.filename" alt="">
-              </div>
-              </div>
-            </div>
-          </div>
+        <img class="production-selling-cover-image__entry__image" :src="product.filename" alt="">
+        <div class="deadline-item-image-dark-overlay-2"></div>
+        <div class="deadline-item-timer-2">
+          <div>⏰ {{timer}} </div>
         </div>
-      </div>
+    </div>
       <div class="production-selling-overview__content col-12 col-md-6 col-lg-5">
         <div class="production-selling-header">
           <h1 class="production-selling-header__title">
@@ -36,24 +31,12 @@
             </p>
             <div class="production-selling-header__title__name-wrap">
               <span class="production-selling-header__title__name">{{ product.productName }}</span>
-              <div class="production-selling-header__action">
-                <button class="production-selling-header__action__button production-selling-header__action__button-scrap" type="button">
-                  <svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-                    <path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
-                  </svg>
-                  <span class="count">122,170</span>
-                </button>
-                <div class="drop-down">
-                  <button class="production-selling-header__action__button" type="button">
-                    <svg class="icon" aria-label="공유하기" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" preserveAspectRatio="xMidYMid meet">
-                      <path d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z">
-                      </path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
             </div>
           </h1>
+
+          <div class="product-info">
+            {{product.productInfo}}
+          </div>
 
           <div class="production-selling-header__content">
             <div class="production-selling-header__price">
@@ -63,19 +46,30 @@
                  </span>
 
                 <del class="production-selling-header__price__original">
-                  <span class="number">{{ product.price }}</span>
+                  <span class="number">{{ formatNumber(product.price) }}</span>
                   <span class="won">원</span>
                 </del>
                   <span class="production-selling-header__price__separator"></span>
                     <div class="production-selling-header__price__price-value-wrap">
                       <div class="production-selling-header__price__price">
-                        <span class="number">{{ product.salePrice }}</span>
+                        <span class="number">{{ formatNumber(product.salePrice) }}</span>
                         <span class="won">원</span>
                       </div>
                     </div>
                   </span>
             </div>
           </div>
+
+
+          <div class="participate">
+            <template v-if="remaining > 0">
+              현재 <span class="highlight">{{ product.people }}명</span> 중 <span class="highlight">{{ product.peopleCount }}명</span>이 이 공동구매에 참여했어요. 아직 <span class="highlight">{{ remaining }}</span>명이 더 참여해야 합니다.
+            </template>
+            <template v-else>
+              현재 <span class="highlight">{{ product.people }}</span>명 중 <span class="highlight">{{ product.peopleCount }}</span>명이 이 공동구매에 참여했어요. <br><br> 최소 인원이 모집되었으니 이 가격에 상품을 100% 구매하실 수 있습니다!
+            </template>
+          </div>
+
         </div>
         <div class="production-selling-header__info-wrap">
           <div class="production-selling-header__delivery">
@@ -127,7 +121,7 @@
           <p class="css-49v6aj ejhg2ki2">
             <span class="css-7c0zb9 ejhg2ki1">주문금액</span>
             <span class="css-q02jxk ejhg2ki0">
-              <span>{{ product.salePrice }}</span>원</span>
+              <span>{{ formatNumber(product.salePrice) }}</span>원</span>
           </p>
           <div class="production-selling-option-form__footer">
               <button class="button button--color-blue-inverted button--size-55 button--shape-4" type="button" @click="productCartIn">장바구니</button>
@@ -137,23 +131,8 @@
           </div>
         </div>
       </div>
-      <div class="product-details">
-        <section class="production-selling-section">
-          <header class="production-selling-section__header production-selling-section__header__hidden">
-            <h1 class="production-selling-section__title">상품정보</h1>
-          </header>
-          <div class="production-selling-description production-selling-description--notice">
-            <div class="production-selling-description__expand-wrap">
-              <p style="text-align: center;"><span style="font-size: 10pt;"><img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/descriptions/url/167593439951524856.png" alt="상품의 상세 설명 이미지" width="165" height="165"></span></p>
-              <p style="text-align: center;"><a href="https://ohou.se/productions/905929/selling?affect_id=27&amp;affect_type=StoreSearchResult"><img src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-197078276358208.jpg" alt="상품의 상세 설명 이미지" width="1440" height="400"></a></p>
-              <p style="text-align: center;"><a href="https://ohou.se/productions/1658834/selling?affect_id=2&amp;affect_type=StoreSearchResult"><img src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-197078428340352.jpg" alt="상품의 상세 설명 이미지"></a></p>
-
-              <p class="descriptions" style="text-align: center;"><strong>*제작 공정 시 생길 수 있는 제품의 표면의 미세한 기포,요철,흠집,얼룩 등은 불량 교환/반품의 사유가 되지 않는 점, 참고해주세요.</strong></p>
-            </div>
-          </div>
-        </section>
-      </div>
     </div>
+  </div>
   <FooterComponent/>
 </template>
 
@@ -170,7 +149,8 @@ export default {
   data() {
     return {
       product: "" ,
-      productIdx: ""
+      productIdx: "",
+      timer:new Date().toLocaleTimeString(),
     }
   },
 
@@ -201,7 +181,7 @@ export default {
         })
 
         this.product = response.data.result;
-        console.log(this.product.filename);
+        console.log(this.product);
 
         if (response.data.code === 3000) {
           alert(response.data.message);
@@ -210,10 +190,46 @@ export default {
         console.log(error)
       }
 
+    },
+
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
+    },
+
+    update() {
+      const now = new Date();	// 현재 날짜 및 시간
+      const close = new Date(this.product.closeAt)
+      const timeDifference  = new Date(close - now);
+
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
+    },
+  },
+
+  computed: {
+    remaining() {
+      return this.product.peopleCount - this.product.people;
     }
   },
+
   mounted() {
     this.readProductDetail();
+
+    const now = new Date();	// 현재 날짜 및 시간
+    const close = new Date(this.product.closeAt)
+    const timeDifference  = new Date(close - now);
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
+    setInterval(this.update, 1000);
   }
 }
 </script>
@@ -243,6 +259,9 @@ p.basic:hover{
 .production-selling {
   position: relative;
   min-height: 1px;
+  margin-top: 90px;
+  display: flex;
+  width: 70%;
 }
 
 .container {
@@ -263,6 +282,7 @@ div {
   margin: 0 -15px;
   padding: 12px 15px;
   border-bottom: 1px solid #ededed;
+  margin-left: 40px;
 }
 
 ol, ul {
@@ -304,14 +324,6 @@ a {
   vertical-align: -1px;
 }
 
-.production-selling-overview__container {
-  margin-top: 0;
-  display:flex;
-  width: 90%;
-  padding-left: 30%;
-  margin-bottom: 30px;
-}
-
 .col-12 {
   position: relative;
   width: 100%;
@@ -329,67 +341,6 @@ a {
   margin: 0 auto;
 }
 
-.production-selling-cover-image-container {
-  position: relative;
-}
-
-.carousel {
-  position: relative;
-}
-
-.production-selling-overview__cover-image {
-  margin: 0 -15px;
-}
-
-.production-selling-cover-image__carousel-wrap {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 0px;
-  -moz-box-flex: 1;
-  -moz-flex: 1 0 0px;
-  -ms-flex: 1 0 0px;
-  flex: 1 0 0px;
-  overflow: hidden;
-}
-
-.carousel__list-wrap {
-  overflow: hidden;
-}
-
-.production-selling-cover-image__carousel-wrap {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 0px;
-  -moz-box-flex: 1;
-  -moz-flex: 1 0 0px;
-  -ms-flex: 1 0 0px;
-  flex: 1 0 0px;
-  overflow: hidden;
-}
-
-
-.carousel__list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -ms-flex-wrap: none;
-  flex-wrap: nowrap;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  -moz-align-items: stretch;
-  align-items: stretch;
-  min-height: 100%;
-}
-
-.production-selling-cover-image__entry {
-  position: relative;
-  padding-bottom: 100%;
-  /* background-color: #ededed; */
-}
-
 img {
   overflow-clip-margin: content-box;
   overflow: clip;
@@ -401,10 +352,9 @@ img {
 
 .production-selling-overview__content{
   width: 70%;
-  /* padding-right:10%; */
-  padding: 30px;
+  padding-left: 15%;
+  padding: 46px;
   height: auto;
-  /* flex:right; */
 }
 
 .production-selling-header {
@@ -456,7 +406,7 @@ a {
 
 .production-selling-header__title__name {
   display: block;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 400;
   line-height: 20px;
   color: #000;
@@ -518,7 +468,7 @@ div {
 }
 
 .production-selling-header__price__price-value-wrap {
-  margin-top: 5px;
+  margin-top: 10px;
   color: #424242;
 }
 
@@ -764,291 +714,66 @@ div {
   border-color: rgb(30, 199, 64);
   color: black;
   height: 45px;
-}
-
-.product-details{
-  width: 80%;
-  padding-left:10%;
-  margin-top: 60px;
-}
-
-.production-selling-section__title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #000;
-  line-height: 23px;
-}
-
-/* footer */
-* {
-  box-sizing: border-box;
-}
-a{
-  text-decoration: none;
-}
-.footer{
-  padding: 40px 40px;
-  background-color: #F7F9FA;
-
-  box-sizing: border-box;
-  font-size: 12px;
-  line-height: 16px;
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 2fr;
-  grid-column-gap: 30px;
-}
-/* .footer-left{
-    padding: 0 40px;
-} */
-
-.customer-service-btn{
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 700;
-  text-decoration: none;
-  margin-bottom: 20px;
-}
-.customer-service-btn:visited{
-  color: purple;
-}
-.customer-service-btn:active{
-  color: blue;
-}
-.customer-service-btn:hover{
-  text-decoration: underline;
-}
-
-.footer-left-top-1{
-  margin-top: 10px;
-}
-.phone-number{
-  display: flex;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 800;
-  white-space: nowrap;
-  margin-right: 6px;
-  text-decoration: none;
-  display: inline;
-
-}
-.phone-number:visited{
-  color: purple;
-}
-.phone-number:active{
-  color: blue;
-}
-.phone-number:hover{
-  text-decoration: underline;
-}
-
-.time{
-  /* display: flex; */
-}
-.footer-left-middle{
-  font-size: 10px;
-  line-height: 5px;
-  white-space: pre-wrap;
-  margin-bottom: 12px;
-
-}
-
-.footer-left-middle-1{
-  margin-top: 5px;
-  position: relative;
-
-  padding-left: 10px;
-
-}
-.footer-left-middle-2{
-  margin-top: 5px;
-  position: relative;
-  line-height: 15px;
-  padding-left: 10px;
-
-}
-.footer-left-middle-3{
-  margin-top: 5px;
-  position: relative;
-
-  padding-left: 10px;
-
-}
-.footer-left-middle-1:before {
-  content: '•';
-  position: absolute;
-  font-size: 10px;
-  left: 0px;
-}
-.footer-left-middle-2:before {
-  content: '•';
-  position: absolute;
-  font-size: 10px;
-  left: 0px;
-}
-.footer-left-middle-3:before {
-  content: '•';
-  position: absolute;
-  font-size: 10px;
-  left: 0px;
-}
-.footer-left-bottom{
-  display: flex;
-  gap: 12px;
-  flex-direction: column;
-  margin-top: 12px\y;
-}
-.footer-left-bottom-counseling-btn{
-  display: flex;
-  cursor: pointer;
-  touch-action: manipulation;
-
-  height: 30px;
-  width: 200px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  background-color:  #F7F9FA;
-  display: inline-block;
-
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: 14px;
-  line-height: 20px;
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: auto;
-  height: 32px;
-  border-radius: 4px;
-  padding: 0 8px;
-  font-weight: 400;
-  box-sizing: border-box;
-  text-align: center;
-  color: #2F3438;
-  border: 1px solid #DADDE0;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.footer-middle-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(6, min-content);
-  grid-auto-flow: column;
-  grid-column-gap: 10px;
-  grid-row-gap: 20px;
-}
-.footer-middle-element{
-  text-decoration: none;
-}
-.footer-middle-element:visited{
-  color: purple;
-}
-.footer-middle-element:link{
-  color: black;
-}
-.footer-middle-element:active{
-  color: blue;
-}
-.footer-middle-element:hover{
-  text-decoration: underline;
-}
-.footer-middle-personal-infomation{
-  text-decoration: none;
-  font-weight: 700;
-}
-.footer-middle-personal-infomation:link{
-  color:black;
-}
-.footer-middle-personal-infomation:visited{
-  color: purple;
-}
-.footer-middle-personal-infomation:active{
-  color: blue;
-}
-.footer-middle-personal-infomation:hover{
-  text-decoration: underline;
-
-}
-.footer-right{
-
-
-  font-size: 10px;
-  line-height: 14px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 12px;
-  color: #828C94;
-  overflow-x: hidden;
-}
-.footer-right-1{
-  overflow-x: hidden;
-  text-decoration-line: none;
-}
-.footer-right-1-1{
-  overflow-x: hidden;
-}
-.footer-right-1-1-element-infomation{
-  font-size: 12px;
-  line-height: 20px;
-  display: inline-block;
-  white-space: nowrap;
-}
-.footer-right-3{
-  display: grid;
-  grid-column-gap: 6px;
-  grid-template-columns: max-content min-content min-content;
-}
-.footer-right-3-icon{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  min-width: 102px;
-  height: 38px;
-  padding: 0 6px;
-  gap: 6px;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-
-}
-.css-1a5klid {
-  display: inline-block;
-  margin-right: 14px;
-}
-.css-8n6bc3 {
-  vertical-align: top;
-  color: #828C94;
+  width: 90px;
 }
 
 .percent {
   color: rgb(24, 204, 60);;
   font-weight: 900;
+}
+
+.product{
+  justify-content: center;
+  width: 60%;
+  display: flex;
+}
+
+.product-info{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 15px;
+  color:gray;
+}
+
+.deadline-item-image-dark-overlay-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  transition: background-color .2s;
+}
+
+.deadline-item-timer-2 {
+  position: absolute;
+  z-index: 3;
+  background-color: rgb(24, 204, 60);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+  top: 20px;
+  left: 20px;
+  padding: 4px;
+  font-size: 14px;
+  line-height: 12px;
+  padding-top: 8px;
+  height: 30px;
+  width: 128px;
+}
+
+.production-selling-overview container{
+  position: relative;
+}
+
+.participate{
+  font-size: 15px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.highlight{
+  font-weight: bold;
+  color: darkred;
 }
 </style>

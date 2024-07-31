@@ -1,6 +1,7 @@
 <template>
   <HeaderComponent/>
   <div class="product-container">
+    <div style="font-size: 20px; margin-bottom:60px; margin-top: 50px;"> 공동구매 상품 등록</div>
     <form id="product-Register-Form">
       <div class="insertImg">
         <h5>상품 사진</h5>
@@ -46,7 +47,7 @@
       <div class="insertnick"><h5>공동구매 마감 시간 </h5></div>
       <div class="insertnick2">공동구매 마감 시간을 설정해주세요.</div>
       <DatePicker
-          :format="resultDate"
+          :format="dateFormat"
           v-model="deadLine"
           locale="ko"
           :enable-time-picker="false"
@@ -64,7 +65,6 @@
     </div>
     <br>
     <button type="submit" class="product-container-button" @click="register">상품 등록하기</button>
-    <button type="submit" class="product-container-button" @click="register">상품 등록하기</button>
   </div>
 <FooterComponent/>
 </template>
@@ -72,6 +72,7 @@
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+import { format } from 'date-fns';
 import DatePicker from '@vuepic/vue-datepicker';
 
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -82,9 +83,15 @@ const backend = process.env.VUE_APP_ENDPOINT
 export default {
   name: "ProductRegisterPage",
   computed: {
+    formattedDate() {
+      return this.deadLine ? format(new Date(this.deadLine), 'yyyy-MM-dd') : '';
+    }
   },
   data() {
     return {
+      deadLine: null, // 날짜 값 초기화
+      dateFormat: 'yyyy-MM-dd', // 날짜 포맷 설정
+
       categoryList: [
         { name: "카테고리를 선택해주세요", value: 0},
         { name: "채소", value: 1},
@@ -103,7 +110,7 @@ export default {
         productName: "",
         price: 0,
         salePrice: 0,
-        productType: 0,
+        categoryIdx: 0,
         productInfo: "",
         people: 2,
         startAt: {},
@@ -115,10 +122,12 @@ export default {
   components: {FooterComponent, HeaderComponent, DatePicker},
   methods: {
     async register() {
-      this.product.productType = this.category2;
-      console.log(this.product.productType)
+      this.product.categoryIdx = this.category2;
+      this.product.closeAt = this.formattedDate;
+      this.product.startAt = format(new Date(), 'yyyy-MM-dd');
 
       console.log(this.product);
+      console.log(this.product.closeAt);
 
       const formData = new FormData();
       formData.append("productRegisterReq", new Blob([JSON.stringify(this.product)], {type: "application/json"}));
@@ -151,13 +160,6 @@ export default {
         return 2;
       }
     },
-
-    resultDate(date) {
-      console.log(date[0]);
-      console.log(date[1]);
-      this.product.startAt = date[0];
-      this.product.closeAt = date[1];
-    }
   }
 }
 </script>
@@ -184,8 +186,7 @@ body {
   border-radius: 8px;
   width: 40%;
   text-align: center;
-  margin-top: 20px; /* 이미지와 로고에 겹치지 않도록 여백 추가 */
-  margin: 0 auto;
+  margin: 90px auto;
 }
 
 .text-with-image img {
@@ -248,9 +249,11 @@ body {
   cursor: pointer;
 }
 
+/*
 .product-container button:hover {
   background-color: #00ab03;
 }
+*/
 
 .content-container a {
   color: #333;
@@ -311,9 +314,9 @@ body {
 }
 
 .seller-img{
-  height: 300px;
+  height: 200px;
   background-color: rgb(227, 228, 228);
-  border-radius: 10px;
+  border-radius: 40px;
   margin-bottom: 50px;
   align-items: center;
   text-align: center;
@@ -365,6 +368,7 @@ body {
   margin-top: 15px;
   width: 200px;
   text-align: center;
+  border-radius: 40px;
 }
 
 </style>
