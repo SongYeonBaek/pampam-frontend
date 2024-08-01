@@ -19,26 +19,24 @@
           <LvProgressBar :value="value" color="#38b2ac"/>
           </div>
         </a>
-        <div>
-          <v-btn icon="$vuetify" color="warning" height="30" width="30">
+        <div v-show="order.status === 0">
+          <v-btn size="x-small" height="30" width="30">
+            <v-icon size="20" color="warning">mdi-information</v-icon>
             <v-tooltip activator="parent" location="bottom" height="30">주문 진행 중</v-tooltip>
           </v-btn>
         </div>
-<!--        <div v-show="order.status === 0">-->
-<!--          <v-btn icon="$vuetify" color="warning" height="30" width="30">-->
-<!--            <v-tooltip activator="parent" location="bottom" height="30">주문 진행 중</v-tooltip>-->
-<!--          </v-btn>-->
-<!--        </div>-->
-<!--        <div v-show="order.status === 1">-->
-<!--          <v-btn icon="$vuetify" color="error" height="30" width="30">-->
-<!--            <v-tooltip activator="parent" location="bottom" height="30">결재 취소됨</v-tooltip>-->
-<!--          </v-btn>-->
-<!--        </div>-->
-<!--        <div v-show="order.status === 2">-->
-<!--          <v-btn icon="$vuetify" color="success" height="30" width="30">-->
-<!--            <v-tooltip activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>-->
-<!--          </v-btn>-->
-<!--        </div>-->
+        <div v-show="order.status === 1">
+          <v-btn size="x-small" height="30" width="30">
+            <v-icon size="20" color="error">mdi-information</v-icon>
+            <v-tooltip activator="parent" location="bottom" height="30">결재 취소됨</v-tooltip>
+          </v-btn>
+        </div>
+        <div v-show="order.status === 2">
+          <v-btn size="x-small" height="30" width="30">
+            <v-icon size="20" color="success">mdi-information</v-icon>
+            <v-tooltip activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>
+          </v-btn>
+        </div>
 
         <!-- order-footer -->
         <div class="ordered-product__footer">
@@ -65,7 +63,6 @@ export default {
   data() {
     return {
       value: 0,
-      count: 10,
       timer: new Date().toLocaleTimeString(),
     }
   },
@@ -76,13 +73,8 @@ export default {
   methods: {
     startProgress() {
       this.interval = setInterval(() => {
-        let newValue = (this.order.peopleCount / 10) * 100
-        // let newValue = (this.order.peopleCount / this.order.totalPeople) * 100
-        if (newValue >= 100) {
-          newValue = 0;
-        }
-        this.value = newValue
-      }, 100)
+        this.value = (this.order.peopleCount / this.order.people) * 100
+      }, 1000)
     },
     update() {
       const now = new Date();	// 현재 날짜 및 시간
@@ -105,6 +97,7 @@ export default {
   },
   mounted() {
     this.startProgress()
+    console.log(this.value)
     setInterval(this.update, 1000)
   },
   components: {
