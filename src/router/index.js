@@ -6,7 +6,7 @@ import SignUpPage from "@/page/SignUpPage.vue";
 import CartPage from "@/page/CartPage.vue";
 import MainPage from "@/page/MainPage.vue";
 import ProductDetailPage from "@/page/ProductDetailPage.vue";
-import ProductRegister from "@/page/ProductRegister.vue";
+import ProductRegisterPage from "@/page/ProductRegisterPage.vue";
 import OrderCompletePage from "@/page/OrderCompletePage.vue";
 import SellerSignUpPage from "@/page/SellerSignUpPage.vue";
 import SellerLoginPage from "@/page/SellerLoginPage.vue";
@@ -25,7 +25,7 @@ const router = createRouter({
         { path: '/seller/signup', component: SellerSignUpPage },
         { path: '/cart', component: CartPage },
         { path: '/product/read/:productIdx', component: ProductDetailPage },
-        { path: '/product/register', component: ProductRegister },
+        { path: '/product/register', component: ProductRegisterPage },
         { path: '/order/complete', component: OrderCompletePage },
         { path: '/search/:keyword', name: 'SearchResult', component: SearchResultPage, props: true},
         { path: '/mypage', component: MyPage },

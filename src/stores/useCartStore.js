@@ -22,10 +22,14 @@ export const useCartStore = defineStore("cart", {
                 }
             })
 
+            if (this.productList != null) {
+                this.productList = []
+            }
+
             response.data.result.forEach((product) => {
                 product.isChecked = false;
                 this.productList.push(product)
-            })
+            });
 
         },
 

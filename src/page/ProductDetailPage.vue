@@ -17,7 +17,7 @@
   <div class="product">
     <div class="production-selling">
     <div class="production-selling-overview container">
-        <img class="production-selling-cover-image__entry__image" :src="product.filename" alt="">
+        <img class="production-selling-cover-image__entry__image" style="width: 485px; height: 485px" :src="product.filename" alt="">
         <div class="deadline-item-image-dark-overlay-2"></div>
         <div class="deadline-item-timer-2">
           <div>⏰ {{timer}} </div>

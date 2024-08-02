@@ -59,8 +59,12 @@
     <div class="count-people">
       <input class="people-count-input" placeholder="공동구매 참여 인원 수" id="공동구매 참여 인원 수" required v-model="product.people">
       <div class="css-1qi5uc2">
-        <button class="people-count-btn-base people-count-button-up" @click="countUp">UP</button>
-        <button class="people-count-btn-base people-count-button-down" @click="countDown">DOWN</button>
+        <v-btn size="x-small" height="30" color="#43A047" class="people-count-btn-base people-count-button-up" @click="countUp" width="10">
+          <v-icon size="24" color="#E8F5E9" >mdi-chevron-up</v-icon>
+        </v-btn>
+        <v-btn size="x-small" height="30" color="#43A047" class="people-count-btn-base people-count-button-up" @click="countDown">
+          <v-icon size="24" color="#E8F5E9">mdi-chevron-down</v-icon>
+        </v-btn>
       </div>
     </div>
     <br>
@@ -143,6 +147,8 @@ export default {
       });
 
       console.log(response.data);
+      alert('상품 등록 성공!!')
+      window.location.href = "/"
     },
 
     countUp() {

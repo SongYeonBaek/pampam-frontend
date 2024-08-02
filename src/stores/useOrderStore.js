@@ -16,6 +16,10 @@ export const useOrderStore = defineStore('order', {
                 }
             })
 
+            if (this.orderList != null) {
+                this.orderList = [];
+            }
+
             response.data.result.forEach((order) => {
                 this.orderList.push(order)
             })
