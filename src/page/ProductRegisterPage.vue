@@ -147,6 +147,8 @@ export default {
       });
 
       console.log(response.data);
+      alert('상품 등록 성공!!')
+      window.location.href = "/"
     },
 
     countUp() {

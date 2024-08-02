@@ -4,6 +4,7 @@
       <article class="ordered-product">
         <!--여기에 남은 시간 보여주면 좋을 듯-->
         <span class="css-17x2thm elsmzm01">남은 마감시간: <span class="afterDeadLine css-1xskdmv elsmzm00">{{ timer }}</span></span>
+        <router-link v-bind:to="`/product/read/${this.order.idx}`">
         <a class="product-small-item product-small-item--clickable" href="/productions/1803860/selling">
           <div class="product-small-item__image">
             <picture>
@@ -15,27 +16,38 @@
             <h1 class="product-small-item__title">{{ order.productName }}</h1>
             <p class="css-w0e4y9 e1xep4wb1">무료배송&nbsp;|&nbsp;일반택배</p>
           </div>
-          <div style="width: 70%">
+          <div class="custom-progressbar">
           <LvProgressBar :value="value" color="#38b2ac"/>
+            <div v-show="order.status === 0">
+              <button disabled class="custom-btn">
+                <v-icon size="20" color="warning">mdi-information</v-icon>
+                <v-tooltip open-on-hover activator="parent" location="bottom" height="30">
+                  <span class="custom-tooltip">test</span>
+                </v-tooltip>
+              </button>
+            </div>
           </div>
         </a>
+        </router-link>
         <div v-show="order.status === 0">
-          <v-btn size="x-small" height="30" width="30">
+          <button disabled class="custom-btn">
             <v-icon size="20" color="warning">mdi-information</v-icon>
-            <v-tooltip activator="parent" location="bottom" height="30">주문 진행 중</v-tooltip>
-          </v-btn>
+            <v-tooltip open-on-hover activator="parent" location="bottom" height="30">
+              <span class="custom-tooltip">test</span>
+            </v-tooltip>
+          </button>
         </div>
         <div v-show="order.status === 1">
-          <v-btn size="x-small" height="30" width="30">
+          <button>
             <v-icon size="20" color="error">mdi-information</v-icon>
             <v-tooltip activator="parent" location="bottom" height="30">결재 취소됨</v-tooltip>
-          </v-btn>
+          </button>
         </div>
         <div v-show="order.status === 2">
-          <v-btn size="x-small" height="30" width="30">
+          <button>
             <v-icon size="20" color="success">mdi-information</v-icon>
-            <v-tooltip activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>
-          </v-btn>
+            <v-tooltip class="custom-tooltip" activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>
+          </button>
         </div>
 
         <!-- order-footer -->
@@ -50,9 +62,6 @@
         </div>
       </article>
     </li>
-<!--    <footer class="commerce-order__delivery-group__footer">-->
-<!--      <p class="commerce-order__delivery-group__total">배송비 무료</p>-->
-<!--    </footer>-->
   </ul>
 </template>
 
@@ -78,8 +87,7 @@ export default {
     },
     update() {
       const now = new Date();	// 현재 날짜 및 시간
-      // const close = new Date(this.order.closeAt)
-      const close = new Date('2024-8-30');
+      const close = new Date(this.order.closeAt)
       const timeDifference  = new Date(close - now);
 
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -87,7 +95,7 @@ export default {
       const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-      this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
+      this.timer = `${days}일 ${hours}:${minutes}:${seconds}`;
     },
 
     // TODO: 주문 취소 구현
@@ -252,4 +260,20 @@ export default {
   font-size: 12px;
   line-height: 16px;
 }
+
+.custom-btn {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.custom-tooltip {
+  font-size: 14px; /* 글자 크기 조정 */
+  color: #d39e00;
+}
+
+.custom-progressbar {
+  width: 60%;
+}
+
 </style>

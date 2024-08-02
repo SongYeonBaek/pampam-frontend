@@ -22,9 +22,16 @@
       <ul class="commerce-mypage__content__group-list">
         <li class="commerce-mypage__content__group-item">
           <article class="commerce-mypage-group">
-            <h1 class="commerce-mypage__group__header">공동구매 인원이 모두 모여야 최종 주문이 완료 됩니다 :)</h1>
-<!--            <mypageCardComponent v-for="product in mypageStore.productList" :key="product.id" v-bind:product="product" />-->
-            <OrderCardComponent v-for="order in orderStore.orderList" :key="order.impUid" v-bind:order="order"></OrderCardComponent>
+            <div v-if="orderStore.orderList.length === 0">
+              <h1 class="commerce-mypage__group__header">주문한 상품이 없습니다. 상품을 먼저 둘러보세요 :)</h1>
+              <div class="btn-div">
+                <v-btn class="custom-move-btn" color="#66BB6A" @click="moveMainPage" text="상품 구경하기"></v-btn>
+              </div>
+            </div>
+            <div v-else-if="orderStore.orderList.length > 0">
+              <h1 class="commerce-mypage__group__header">공동구매 인원이 모두 모여야 최종 주문이 완료 됩니다 :)</h1>
+              <OrderCardComponent v-for="order in orderStore.orderList" :key="order.impUid" v-bind:order="order"></OrderCardComponent>
+            </div>
           </article>
         </li>
       </ul>
@@ -32,9 +39,9 @@
     <div class="mypage-right">
       <dl class="commerce-mypage__summary commerce-mypage__side-bar__summary">
         <div class="commerce-mypage__summary__row">
-          <dt>반갑습니다! {{memberStore.token.email}}님</dt>
+          <dt>반갑습니다! {{memberStore.email}}님</dt>
           <v-avatar color="grey" size="180">
-            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+            <img style="width: 100px; height: 100px" alt="프로필 이미지" :src="memberStore.profileImage">
           </v-avatar>
         </div>
       </dl>
@@ -59,10 +66,14 @@ export default {
   methods: {
     async getOrderedList() {
       this.orderStore.getOrderList()
-    }
+    },
+    moveMainPage() {
+      window.location.href = '/'
+    },
   },
   mounted() {
     this.memberStore.showData()
+    console.log(this.memberStore.profileImage)
     this.getOrderedList();
   }
 }
@@ -108,7 +119,7 @@ p.basic:hover {
 }
 
 .commerce-mypage__side-bar__summary {
-  margin: 0 0 20px;
+  margin: -10px 0 60px;
   border: 1px solid #ededed;
   border-radius: 6px;
   background-color: #fff;
@@ -199,19 +210,6 @@ li {
   display: inline-block;
   font-size: 0;
   padding: 9px;
-}
-
-.checkAll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  cursor: inherit;
-  /* opacity: 0; */
-  box-sizing: border-box;
 }
 
 ._4VN_z {
@@ -427,6 +425,19 @@ ul {
 
 .image {
   width: 200px;
+}
+
+.custom-move-btn {
+  display: flex;
+  color: rgb(255 255 255 / 58%) !important;
+  margin: auto;
+}
+
+.btn-div{
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  height: 175px;
 }
 
 /* footer end */
