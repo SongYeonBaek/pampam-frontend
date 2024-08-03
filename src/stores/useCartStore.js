@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import router from "@/router";
 
 const backend = process.env.VUE_APP_ENDPOINT
 
@@ -15,21 +16,29 @@ export const useCartStore = defineStore("cart", {
     }),
     actions: {
         async getCartList() {
-            let token = localStorage.getItem('accessToken')
-            let response = await axios.get(`${backend}/cart/cartList`, {
-                headers: {
-                    Authorization: token
-                }
-            })
+            try {
+                let token = localStorage.getItem('accessToken')
+                let response = await axios.get(`${backend}/cart/cartList`, {
+                    headers: {
+                        Authorization: token
+                    }
+                })
 
-            if (this.productList != null) {
-                this.productList = []
+                if (this.productList != null) {
+                    this.productList = []
+                }
+
+                response.data.result.forEach((product) => {
+                    product.isChecked = false;
+                    this.productList.push(product)
+                });
+            } catch (error) {
+                console.log(error)
+                if (error.code === '0001') {
+                    router.push({name: 'error', params: {errorStatus: error.status, message: error.message }})
+                }
             }
 
-            response.data.result.forEach((product) => {
-                product.isChecked = false;
-                this.productList.push(product)
-            });
 
         },
 
