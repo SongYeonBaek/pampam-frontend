@@ -12,6 +12,7 @@ import SellerSignUpPage from "@/page/SellerSignUpPage.vue";
 import SellerLoginPage from "@/page/SellerLoginPage.vue";
 import SearchResultPage from "@/page/SearchResultPage.vue";
 import MyPage from "@/page/MyPage.vue";
+import ErrorPage from "@/page/ErrorPage.vue";
 
 
 const router = createRouter({
@@ -29,6 +30,7 @@ const router = createRouter({
         { path: '/order/complete', component: OrderCompletePage },
         { path: '/search/:keyword', name: 'SearchResult', component: SearchResultPage, props: true},
         { path: '/mypage', component: MyPage },
+        { path: '/error/page/:errorStatus/:message', name: 'error', component: ErrorPage },
     ]
 })
 
