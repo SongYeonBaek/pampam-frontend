@@ -33,14 +33,33 @@ export const useCartStore = defineStore("cart", {
                     this.productList.push(product)
                 });
             } catch (error) {
-                console.log(error)
-                if (error.code === '0001') {
-                    router.push({name: 'error', params: {errorStatus: error.status, message: error.message }})
+                if (error.code === 1001) {
+                    console.log(error.message)
+                    router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
+                }
+            }
+        },
+        async productCartIn(productIdx) {
+            try {
+                let response = await axios.get(`${backend}/cart/in/` + productIdx, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                    },
+                });
+
+                if (response.data.code === 1000) {
+                    alert("상품이 장바구니에 담겼습니다!");
+                }
+            } catch (error) {
+                if (error.response.data.code === 1001) {
+                    alert(error.response.data.message)
+                } else if (error.response.data.code === 1004) {
+                    alert(error.response.data.message)
                 }
             }
 
-
         },
+
 
         toggleCheckAllProducts(isCheckedAll) {
             this.productList.forEach(product => {

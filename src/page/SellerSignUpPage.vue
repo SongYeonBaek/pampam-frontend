@@ -146,6 +146,7 @@
 <script>
 
 import axios from "axios";
+import router from "@/router";
 const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
@@ -171,19 +172,28 @@ export default {
       const formData = new FormData();
       formData.append("sellerSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
       formData.append("image", this.file[0]);
-      let response = await axios.post(`${backend}/member/seller/signup`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+
+      try {
+        let response = await axios.post(`${backend}/member/seller/signup`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        console.log(response);
+
+        if (response.data.code === 1000) {
+          alert(response.data.message);
         }
-      })
-      console.log(response);
 
-      if (response.data.code === 1000) {
-        alert(response.data.message);
-      }
-
-      if (response.data.code === 3000) {
-        alert(response.data.message);
+        if (response.data.code === 3000) {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        if (error.response.data.code === 1001) {
+          alert(error.response.data.message)
+        } else if (error.response.data.code === 5000) {
+          router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
+        }
       }
     },
   },

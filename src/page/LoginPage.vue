@@ -66,6 +66,7 @@
 <script>
 import axios from "axios";
 import {toRaw} from "vue";
+import router from "@/router";
 const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
@@ -87,20 +88,25 @@ export default {
         password: member.password,
       }
 
+      try {
+        let response = await axios.post(`${backend}/member/consumer/login`, data);
 
-      let response = await axios.post(`${backend}/member/consumer/login`, data);
+        if (response.data.code === 1000) {
+          alert("로그인 성공")
+          localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
+        }
 
-      if (response.data.code === 1000) {
-        alert("로그인 성공")
-        localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
-
+        if (response.data.code === 3000) {
+          alert(response.data.message)
+        }
+        window.location.href = "/"
+      } catch (error) {
+        if (error.response.data.code === 1001 || error.response.data.code === 1003) {
+          alert(error.response.data.message)
+        } else if (error.response.data.code === 5000) {
+          router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
+        }
       }
-
-      if (response.data.code === 3000) {
-        alert(response.data.message)
-      }
-
-      window.location.href = "/"
     }
   }
 }
