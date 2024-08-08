@@ -82,7 +82,7 @@
       </div>
       <div class="body-deadline-item-list row">
         <Splide :options="{ perPage: 4, perMove: 4, rewind: true, gap: '1rem' }" class="bottom-slider">
-          <SplideSlide v-for="product in productStore.productList" :key="product.idx">
+          <SplideSlide v-for="product in productStore.deadLineList" :key="product.idx">
             <MainCardComponent v-bind:product="product" />
           </SplideSlide>
         </Splide>
@@ -97,7 +97,7 @@
       </div>
       <div class="body-deadline-item-list row">
         <Splide :options="{ perPage: 4, perMove: 4, rewind: true, gap: '1rem' }" class="bottom-slider">
-          <SplideSlide v-for="product in productStore.productList" :key="product.idx">
+          <SplideSlide v-for="product in productStore.hotDealList" :key="product.idx">
             <MainCardComponent v-bind:product="product" />
           </SplideSlide>
         </Splide>
@@ -150,10 +150,20 @@ export default {
 
     async getProductList(page, size) {
       this.productStore.getProductList(page, size)
-    }
+    },
+
+    async getDeadLineList(page, size) {
+      this.productStore.getDeadLineList(page, size)
+    },
+
+    async getHotDealList(page, size) {
+      this.productStore.getHotDealList(page, size)
+    },
   },
   mounted() {
     this.getProductList(1, 16);
+    this.getDeadLineList(1, 16);
+    this.getHotDealList(1, 16);
   }
 }
 </script>
