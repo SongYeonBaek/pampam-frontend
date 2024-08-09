@@ -141,6 +141,8 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
+import {mapStores} from "pinia";
+import {useCartStore} from "@/stores/useCartStore";
 const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
@@ -155,18 +157,16 @@ export default {
   },
 
   components: {HeaderComponent, FooterComponent},
+  computed: {
+    ...mapStores(useCartStore),
+    remaining() {
+      return this.product.peopleCount - this.product.people;
+    }
+  },
 
   methods: {
     async productCartIn() {
-      let response = await axios.get(`${backend}/cart/in/` + this.productIdx, {
-        headers: {
-          Authorization: localStorage.getItem("accessToken")
-        },
-      })
-
-      if (response.data.code === 1000) {
-        alert("상품이 장바구니에 담겼습니다!");
-      }
+      this.cartStore.productCartIn(this.productIdx)
     },
     async readProductDetail() {
       const route = useRoute()
@@ -208,12 +208,6 @@ export default {
 
       this.timer = days+"일 " + hours + ":" + minutes + ":" + seconds;
     },
-  },
-
-  computed: {
-    remaining() {
-      return this.product.peopleCount - this.product.people;
-    }
   },
 
   mounted() {

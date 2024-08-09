@@ -42,6 +42,7 @@
 <script>
 import axios from "axios";
 import {toRaw} from "vue";
+import router from "@/router";
 const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
@@ -63,12 +64,17 @@ export default {
         password: member.password,
       }
 
-      let response = await axios.post( `${backend}/member/seller/login`, data);
-      console.log(response);
-
-      localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
-
-      window.location.href = "/"
+      try {
+        let response = await axios.post( `${backend}/member/seller/login`, data);
+        localStorage.setItem("accessToken", "Bearer " + response.data.result.token);
+        window.location.href = "/"
+      } catch (error) {
+        if (error.response.data.code === 1001 || error.response.data.code === 1003) {
+          alert(error.response.data.message)
+        } else if (error.response.data.code === 5000) {
+          router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
+        }
+      }
     }
   }
 }

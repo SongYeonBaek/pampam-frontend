@@ -104,6 +104,7 @@
 
 <script>
 import axios from "axios";
+import router from "@/router";
 const backend = process.env.VUE_APP_ENDPOINT
 
 export default {
@@ -134,20 +135,26 @@ export default {
       formData.append("memberSignupReq", new Blob([JSON.stringify(this.member)], {type: "application/json"}));
       formData.append("profileImage", this.file[0]);
 
-      let response = await axios.post(`${backend}/member/consumer/signup`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      try {
+        let response = await axios.post(`${backend}/member/consumer/signup`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+
+        if (response.data.code === 1000) {
+          alert("회원가입 성공")
+          window.location.href = "/"
         }
-      })
-      console.log(response);
 
-      if (response.data.code === 1000) {
-        alert("회원가입 성공")
-        window.location.href = "/"
-      }
-
-      if (response.data.code === 3000) {
-        alert("회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요")
+      } catch (error) {
+        if (error.response.data.code === 1000) {
+          alert('이미 존재하는 회원입니다. 다른 아이디를 사용해주세요')
+        } else if (error.response.data.code === 1001) {
+          alert(error.response.data.message)
+        } else if (error.response.data.code === 5000) {
+          router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
+        }
       }
     },
     toggleAll() {
