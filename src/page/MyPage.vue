@@ -8,8 +8,7 @@
             <div class="_3zqA8">
               <span class="_2mDYR">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
-                  <path fill="currentColor"
-                        d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path>
+                  <path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path>
                 </svg>
               </span>
             </div>
@@ -39,27 +38,28 @@
     <div class="mypage-right">
       <dl class="commerce-mypage__summary commerce-mypage__side-bar__summary">
         <div class="commerce-mypage__summary__row">
-          <dt>반갑습니다! {{memberStore.email}}님</dt>
-          <v-avatar color="grey" size="180">
-            <img style="width: 100px; height: 100px" alt="프로필 이미지" :src="memberStore.profileImage">
-          </v-avatar>
+          <div class="profile-container">
+            <v-avatar color="grey" size="180" class="profile-avatar" style="width: 80%;height: 80%;">
+              <img alt="프로필 이미지" :src="memberStore.profileImage">
+            </v-avatar>
+          </div>
+          <dt class="user"><div style="font-size: small; margin-left:25%;">반갑습니다!</div> <br>{{memberStore.email}}님</dt>
         </div>
       </dl>
     </div>
   </div>
-<!--  <FooterComponent></FooterComponent>-->
+  <!-- <FooterComponent></FooterComponent> -->
 </template>
 
 <script>
-
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import {useMemberStore} from "@/stores/useMemberStore";
-import {mapStores} from "pinia";
+import { useMemberStore } from "@/stores/useMemberStore";
+import { mapStores } from "pinia";
 import OrderCardComponent from "@/components/OrderCardComponent.vue";
-import {useOrderStore} from "@/stores/useOrderStore";
+import { useOrderStore } from "@/stores/useOrderStore";
 
 export default {
-  components: {HeaderComponent, OrderCardComponent},
+  components: { HeaderComponent, OrderCardComponent },
   computed: {
     ...mapStores(useMemberStore, useOrderStore)
   },
@@ -80,6 +80,7 @@ export default {
 </script>
 
 <style>
+/* 기본 스타일 */
 p {
   text-align: center;
   font-size: 18px;
@@ -99,151 +100,119 @@ p.basic:hover {
   color: rgb(24, 204, 60);
 }
 
+/* mypage 스타일 */
 .mypage {
-  padding-top: 350px;
+  padding-top: 135px;
   position: absolute;
   background-color: #f5f5f5;
-  /* flex: 1 0 auto; */
-  /* height: 100%; */
   width: 100%;
-  /* height: 1000px; */
-}
-
-/* mypage-right */
-.mypage-right {
-  width: 25%;
-  background-color: #f5f5f5;
-  float: right;
-  margin-right: 15%;
-  margin-top: 60px;
-}
-
-.commerce-mypage__side-bar__summary {
-  margin: -10px 0 60px;
-  border: 1px solid #ededed;
-  border-radius: 6px;
-  background-color: #fff;
-  padding: 10px 20px;
-}
-
-.commerce-mypage__summary__row {
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  justify-content: space-between;
-  margin: 20px 0;
-  font-size: 15px;
-  font-weight: 400;
-  color: #424242;
 }
 
-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-}
-
-.commerce-mypage__content__group-list {
-  list-style: none;
-}
-
-.commerce-mypage__side-bar__order__btn {
-  background-color: rgb(24, 204, 60);
-  border-color: rgb(30, 199, 64);
-  color: #fff;
-  border-radius: 3px;
-  width: 100%;
-  font-weight: 400;
-  padding: 15px 10px;
-  line-height: 20px;
-  font-size: 17px;
-  min-height: 50px;
-}
-
-.commerce-mypage__summary__row {
-  font-size: 15px;
-  font-weight: 400;
-  color: #424242;
-}
-
-.commerce-mypage__summary__row>dd {
-  font-weight: 700;
-  text-align: right;
-}
-
-/* mypage-left */
+/* 왼쪽 박스 */
 .mypage-left {
-  width: 40%;
+  width: 60%;
   background-color: #f5f5f5;
   float: left;
   margin-left: 15%;
 }
 
-.commerce-mypage__header {
-  display: -moz-flex;
-  display: -ms-flexbox;
+/* 오른쪽 박스 */
+.mypage-right {
+  width: 30%;
+  background-color: #f5f5f5;
+  margin-right: 15%;
+  margin-top: 60px;
+  padding: 20px; /* 패딩 추가 */
+  box-sizing: border-box;
+  flex-direction: column; /* 내용물들을 세로 방향으로 정렬 */
+  align-items: center; /* 가로 방향으로 중앙 정렬 */
+  justify-content: center; /* 세로 방향으로 중앙 정렬 */
+}
+
+/* 프로필 이미지 컨테이너
+.profile-container {
   display: flex;
-  -ms-flex-align: center;
-  -moz-align-items: center;
+  justify-content: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
+  margin-bottom: 20px;
+  width: 130px;
+  height: 130px;
+}
+*/
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* 이미지와 텍스트 간격 */
+  width: 130px;
+  height: 130px;
+  margin-left: 25%;
+
+}
+
+/* 프로필 이미지 스타일 */
+.profile-avatar {
+  //border: 3px solid; /* 테두리 색상 및 두께 조정 */
+  border-radius: 50%; /* 동그란 테두리 */
+  overflow: hidden;
+}
+
+/* 프로필 이미지 */
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+/* 상태바 스타일 */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  margin-right: 10px;
+}
+
+.circle.active {
+  border-color: #66BB6A;
+  background-color: #66BB6A;
+}
+
+.status-text {
+  font-size: 14px;
+  color: #424242;
+}
+
+.commerce-mypage__header {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   padding: 8px 15px;
   margin: 0 0 11px;
-  /* background-color: #ededed; */
   border-bottom: 1px solid #ededed;
   z-index: 100;
 }
 
-._3zqA8 {
-  position: relative;
-  display: inline-block;
-  font-size: 0;
-  padding: 9px;
-}
-
-._4VN_z {
-  flex-direction: row;
-  padding-right: 6px;
-}
-
-._3xqzr {
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
-  width: 100%;
-}
-
-.commerce-mypage__header__delete,
-.commerce-mypage__header__delete-sold-out {
-  display: inline-block;
-  margin: 2px -3px 0;
-  padding: 3px;
-  background: none;
-  border: none;
+.commerce-mypage__header__caption {
+  font-size: 16px;
+  font-weight: 500;
   color: #424242;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1;
-  transition: opacity 0.1s;
-}
-
-._3zqA8 {
-  position: relative;
-  display: inline-block;
-  font-size: 0;
-  padding: 9px;
 }
 
 .commerce-mypage__group__header {
@@ -257,188 +226,16 @@ li {
   background-color: #fff;
 }
 
-.css-1xskdmv.afterDeadLine::before {
-  position: absolute;
-  left: -8px;
-  content: "";
-  display: inline-block;
-  border-left: 1px solid rgb(194, 200, 204);
-  top: 3px;
-  height: 10px;
-  width: 1px;
-}
-
-.css-1xskdmv.afterDeadLine {
-  font-weight: 700;
-  color: rgb(24, 204, 60);
-  margin-left: 17px;
-  position: relative;
-}
-
-.css-17x2thm {
-  display: inline-flex;
-  color: rgb(47, 52, 56);
-  background-color: rgb(247, 249, 250);
-  padding: 6px 10px;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.mypageed-product .product-small-item {
-  margin: 0 20px 12px 0;
-}
-
-.product-small-item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.product-small-item__image img {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  transition: transform 0.2s;
-  transform: translate(-50%, -50%) scale(1.0001);
-}
-
-.product-small-item__title {
-  min-width: 0;
-  font-size: 15px;
-  font-weight: 500;
-  color: #000;
-  line-height: 21px;
-  overflow-wrap: break-word;
-  transition: opacity 0.1s;
-}
-
-.css-w0e4y9 {
-  margin-top: 8px;
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 15px;
-  color: rgb(117, 117, 117);
-  overflow-wrap: break-word;
-  display: flex;
-  -webkit-box-align: center;
+.commerce-mypage__summary{
+  background-color: white;
   align-items: center;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.mypageed-product__subtotal {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  color: #000;
-  font-size: 17px;
-  font-weight: 700;
-}
-
-ul {
-  display: block;
-  list-style-type: disc;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 0px;
-}
-
-
-/* Footer */
-.customer-service-btn {
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 700;
-  text-decoration: none;
-  margin-bottom: 20px;
-}
-
-.customer-service-btn:visited {
-  color: black;
-}
-
-.customer-service-btn:active {
-  color: black;
-}
-
-.customer-service-btn:hover {
-  text-decoration: underline;
-}
-
-.phone-number {
-  display: flex;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 700;
-  white-space: nowrap;
-  margin-right: 6px;
-  text-decoration: none;
-  display: inline;
-
-}
-
-.phone-number:visited {
-  color: purple;
-}
-
-.phone-number:active {
-  color: blue;
-}
-
-.phone-number:hover {
-  text-decoration: underline;
-}
-
-
-.css-1a5klid {
-  display: inline-block;
-  margin-right: 14px;
-}
-
-.css-8n6bc3 {
-  vertical-align: top;
-  color: #828C94;
-}
-
-.image-size {
-  width: 60px;
-}
-
-.deadline-item-image-show {
-  margin: 0;
-  padding: 0;
-}
-
-.image {
-  width: 200px;
-}
-
-.custom-move-btn {
-  display: flex;
-  color: rgb(255 255 255 / 58%) !important;
-  margin: auto;
-}
-
-.btn-div{
   justify-content: center;
-  width: 100%;
-  display: flex;
-  height: 175px;
+  width: 89%;
+  padding: 30px;
 }
 
-/* footer end */
+.user{
+  margin-left: 25%;
+
+}
 </style>
