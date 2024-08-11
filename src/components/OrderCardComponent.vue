@@ -2,63 +2,55 @@
   <ul class="commerce-order__group__item-list">
     <li class="commerce-order__delivery-group__product-item">
       <article class="ordered-product">
-        <!--여기에 남은 시간 보여주면 좋을 듯-->
-        <span class="css-17x2thm elsmzm01">남은 마감시간: <span class="afterDeadLine css-1xskdmv elsmzm00">{{ timer }}</span></span>
+        <!-- 남은 시간 표시 -->
+        <span class="css-17x2thm elsmzm01">
+          남은 마감시간: <span class="afterDeadLine css-1xskdmv elsmzm00">{{ timer }}</span>
+        </span>
         <router-link v-bind:to="`/product/read/${this.order.idx}`">
-        <a class="product-small-item product-small-item--clickable" href="/productions/1803860/selling">
-          <div class="product-small-item__image">
-            <picture>
-              <!--여기에 상품 사진???-->
+          <a class="product-small-item product-small-item--clickable" href="/productions/1803860/selling">
+            <div class="product-small-item__image">
+              <!-- 상품 이미지 -->
               <img alt="상품 이미지" :src="order.filename">
-            </picture>
-          </div>
-          <div class="product-small-item__content">
-            <h1 class="product-small-item__title">{{ order.productName }}</h1>
-            <p class="css-w0e4y9 e1xep4wb1">무료배송&nbsp;|&nbsp;일반택배</p>
-          </div>
-          <div class="custom-progressbar">
-          <LvProgressBar :value="value" color="#38b2ac"/>
-            <div v-show="order.status === 0">
-              <button disabled class="custom-btn">
-                <v-icon size="20" color="warning">mdi-information</v-icon>
-                <v-tooltip open-on-hover activator="parent" location="bottom" height="30">
-                  <span class="custom-tooltip">test</span>
-                </v-tooltip>
-              </button>
             </div>
-          </div>
-        </a>
+            <div class="product-small-item__content">
+              <h1 class="product-small-item__title">{{ order.productName }}</h1>
+            </div>
+            <div class="custom-progressbar">
+              <LvProgressBar :value="value" color="lightblue"/>
+              <div class="progressbar-status">
+                <div class="progressbar-left"> 시작🎁 </div>
+                <div class="progressbar-right"> 모집 성공🎉 </div>
+              </div>
+              <!-- Horizontal Circles -->
+              <div class="progress-circles">
+                <div class="progress-circle-container">
+                  <div :class="['progress-circle', { 'active': order.status >= 0 }]">1</div>
+                  <div class="progress-circle-label">{{ getStatusLabel(0) }}</div>
+                </div>
+                <div :class="['progress-line', { 'active': order.status >= 0 }]" :style="{ width: lineWidth }"></div>
+                <div class="progress-circle-container">
+                  <div :class="['progress-circle', { 'active': order.status >= 1 }]">2</div>
+                  <div class="progress-circle-label">{{ getStatusLabel(1) }}</div>
+                </div>
+                <div :class="['progress-line', { 'active': order.status >= 1 }]" :style="{ width: lineWidth }"></div>
+                <div class="progress-circle-container">
+                  <div :class="['progress-circle', { 'active': order.status >= 2 }]">3</div>
+                  <div class="progress-circle-label">{{ getStatusLabel(2) }}</div>
+                </div>
+              </div>
+            </div>
+          </a>
         </router-link>
-        <div v-show="order.status === 0">
-          <button disabled class="custom-btn">
-            <v-icon size="20" color="warning">mdi-information</v-icon>
-            <v-tooltip open-on-hover activator="parent" location="bottom" height="30">
-              <span class="custom-tooltip">test</span>
-            </v-tooltip>
-          </button>
-        </div>
-        <div v-show="order.status === 1">
-          <button>
-            <v-icon size="20" color="error">mdi-information</v-icon>
-            <v-tooltip activator="parent" location="bottom" height="30">결재 취소됨</v-tooltip>
-          </button>
-        </div>
-        <div v-show="order.status === 2">
-          <button>
-            <v-icon size="20" color="success">mdi-information</v-icon>
-            <v-tooltip class="custom-tooltip" activator="parent" location="bottom" height="30">최종 결재 성공</v-tooltip>
-          </button>
-        </div>
 
         <!-- order-footer -->
         <div class="ordered-product__footer">
           <span class="ordered-product__footer__left">
-<!--            <v-btn @click="orderCancel(order.impUid)" class="ordered-product__edit-btn" height="40" width="60">구매 취소</v-btn>-->
-            <button  type="button">구매 취소</button>
+            <button type="button">구매 취소</button>
           </span>
           <span class="ordered-product__subtotal">
-          <span class="ordered-product__subtotal__number">{{ order.salePrice }}</span>
-          원</span>
+            <span class="ordered-product__subtotal__number">{{ order.salePrice }}</span>
+            원
+          </span>
         </div>
       </article>
     </li>
@@ -67,12 +59,14 @@
 
 <script>
 import LvProgressBar from 'lightvue/progress-bar'
+
 export default {
   name: 'OrderCardComponent',
   data() {
     return {
       value: 0,
       timer: new Date().toLocaleTimeString(),
+      lineWidth: '33.33%' // 각 선의 너비, 동그라미 개수에 따라 조정
     }
   },
   props: [
@@ -86,9 +80,9 @@ export default {
       }, 1000)
     },
     update() {
-      const now = new Date();	// 현재 날짜 및 시간
+      const now = new Date(); // 현재 날짜 및 시간
       const close = new Date(this.order.closeAt)
-      const timeDifference  = new Date(close - now);
+      const timeDifference = new Date(close - now);
 
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -97,15 +91,20 @@ export default {
 
       this.timer = `${days}일 ${hours}:${minutes}:${seconds}`;
     },
-
-    // TODO: 주문 취소 구현
-    /*async orderCancel(impUid) {
-      this.orderStroe.orderCancel(impUid)
-    }*/
+    getStatusLabel(step) {
+      if (this.order.status === 2) {
+        if (step === 0) return '결제 완료';
+        if (step === 1) return '공동구매 미체결';
+        if (step === 2) return '환불 완료';
+      } else {
+        if (step === 0) return '결제 완료';
+        if (step === 1) return '공동구매 체결';
+        if (step === 2) return '배송 준비';
+      }
+    }
   },
   mounted() {
     this.startProgress()
-    console.log(this.value)
     setInterval(this.update, 1000)
   },
   components: {
@@ -122,7 +121,6 @@ export default {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  /* padding-inline-start: 40px; */
   list-style: none;
   background-color: #fff;
 }
@@ -211,69 +209,113 @@ export default {
   flex: 0 0 auto;
 }
 
-.ordered-product__edit-btn,
-.ordered-product__order-btn {
-  position: relative;
-  display: inline-block;
-  margin: 2px 0 0 -3px;
-  padding: 3px;
-  background: none;
-  border: none;
-  color: #424242;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1;
-  transition: opacity 0.1s;
-}
-
-.ordered-product__edit-btn:nth-child(n + 2),
-.ordered-product__order-btn:nth-child(n + 2) {
-  margin-left: 14px;
-}
-
-.ordered-product__order-btn:nth-child(n + 2):before {
-  content: "";
-  position: absolute;
+.ordered-product__subtotal {
   display: block;
-  left: -7px;
-  top: 4px;
-  height: 12px;
-  border-left: 1px solid #dbdbdb;
-}
-
-.commerce-order__delivery-group__footer {
-  padding: 3px;
-  font-size: 12px;
-  line-height: 15px;
-  text-align: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -moz-box-flex: 1;
+  -moz-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  font-weight: bold;
+  text-align: right;
+  font-size: 16px;
   color: #424242;
-}
-
-.css-17x2thm {
-  display: inline-flex;
-  color: rgb(47, 52, 56);
-  background-color: rgb(247, 249, 250);
-  padding: 6px 10px;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  font-size: 12px;
-  line-height: 16px;
 }
 
 .custom-btn {
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.custom-tooltip {
-  font-size: 14px; /* 글자 크기 조정 */
-  color: #d39e00;
+  background-color: #f44336;
+  color: white;
 }
 
 .custom-progressbar {
-  width: 60%;
+  margin-top: 10px;
+  width: 70%;
+  position: relative;
 }
 
+.progress-circles {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  position: relative;
+  width: 100%; /* Ensure full width to match progress bar */
+}
+
+.progress-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black; /* 기본 테두리 색상 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.progress-circle.active {
+  background-color: black; /* 활성화된 동그라미 색상 */
+  color: white; /* 활성화된 동그라미 글자 색상 */
+}
+
+.progress-line {
+  height: 2px;
+  background-color: black;
+}
+
+.progress-line.active {
+  background-color: black; /* 활성화된 선의 색상 */
+}
+
+.progress-circle-label {
+  margin-top: 8px; /* 동그라미와 상태 텍스트 사이의 간격 조정 */
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.progress-line:not(:last-child) {
+  margin: 0; /* 동그라미와 동그라미 사이의 빈틈 없애기 */
+  margin-top: -35px;
+}
+
+.progressbar-status {
+  display: flex;
+  justify-content: space-between; /* 텍스트를 양쪽 끝에 배치 */
+  position: absolute;
+  width: 100%; /* 전체 너비를 사용하여 텍스트를 끝까지 배치 */
+  margin-top: 5px; /* Progress bar와 텍스트 사이의 간격 조정 */
+  font-size: smaller; /* 폰트 크기 조정 */
+  font-weight: lighter;
+}
+
+.progressbar-left {
+  float: left;
+}
+
+.progressbar-right {
+  float: right;
+}
+
+.lv-progressbar--determinate .lv-progressbar--determinate__label {
+  text-align: center;
+  height: 65%;
+  width: 90%;
+  position: absolute;
+  font-weight: normal;
+}
+
+.lv-progressbar {
+  border: 0 none;
+  height: 20px;
+  background: #dee2e6;
+  border-radius: 3px;
+}
 </style>
