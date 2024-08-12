@@ -1,20 +1,17 @@
 <template>
-  <div class="content">
-    <svg class="error-svg" viewBox="0 0 960 300">
-      <symbol id="s-text">
-        <text text-anchor="middle" x="50%" y="70%">{{ errorStatus }}</text>
-      </symbol>
-
-      <g class = "g-ants">
-        <use xlink:href="#s-text" class="text"></use>
-        <use xlink:href="#s-text" class="text"></use>
-        <use xlink:href="#s-text" class="text"></use>
-        <use xlink:href="#s-text" class="text"></use>
-        <use xlink:href="#s-text" class="text"></use>
-      </g>
-    </svg>
-    <h1 class="error-h1">{{ message }}</h1>
-    <a class="error-a" href="/">메인 페이지로 돌아가기</a>
+  <div class="page-404">
+    <div class="outer">
+      <div class="middle">
+        <div class="inner">
+          <div class="inner-circle">
+            <i class="fa fa-cogs"></i>
+            <span @click="movePage">{{ errorStatus }}</span>
+          </div>
+          <span class="inner-status">{{ message }}</span>
+          <span class="inner-status">로그인 페이지로 돌아가시려면 앞에 보이시는 숫자를 클릭해주세요.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,89 +20,135 @@ export default {
   name: 'ErrorPage',
   data() {
     return {
-      errorStatus: '',
-      message: '',
+      errorStatus: "",
+      message: ""
     }
   },
   created() {
-    this.errorStatus = this.$route.params.errorStatus
-    this.message = this.$route.params.message
+    this.errorStatus = this.$route.params.errorStatus;
+    this.message = this.$route.params.message;
+  },
+  methods: {
+    movePage() {
+      window.location.href = '/'
+    }
   }
 }
 </script>
 
 <style>
+.clearfix:before,
+.clearfix:after {
+  display: table;
 
-.error-svg {
-  font: 10.5em 'Monoton';
+  content: ' ';
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+body {
+  background: #f0f0f0 !important;
+}
+
+.page-404 .outer {
+  position: absolute;
+  top: 0;
+
+  display: table;
+
   width: 100%;
-  height: 55vh;
+  height: 100%;
 }
 
-.content{
+.page-404 .outer .middle {
+  display: table-cell;
+
+  vertical-align: middle;
+}
+
+.page-404 .outer .middle .inner {
+  width: 300px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.page-404 .outer .middle .inner .inner-circle {
+  height: 300px;
+
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.page-404 .outer .middle .inner .inner-circle:hover i {
+  color: #39bbdb !important;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 0 15px #39bbdb;
+}
+
+.page-404 .outer .middle .inner .inner-circle:hover span {
+  color: #39bbdb;
+}
+
+.page-404 .outer .middle .inner .inner-circle i {
+  font-size: 5em;
+  line-height: 1em;
+
+  float: right;
+
+  width: 1.6em;
+  height: 1.6em;
+  margin-top: -.7em;
+  margin-right: -.5em;
+  padding: 20px;
+
+  -webkit-transition: all .4s;
+  transition: all .4s;
   text-align: center;
+
+  color: #f5f5f5 !important;
+  border-radius: 50%;
+  background-color: #39bbdb;
+  box-shadow: 0 0 0 15px #f0f0f0;
 }
 
-.error-h1 {
+.page-404 .outer .middle .inner .inner-circle span {
+  font-size: 11em;
+  font-weight: 700;
+  line-height: 1.2em;
+
+  display: block;
+
+  -webkit-transition: all .4s;
+  transition: all .4s;
   text-align: center;
-  font: 1.5em 'Roboto', sans-serif;
-  font-weight: bold;
-  color: #2f8f7f;
-  opacity: .6;
+
+  color: #e0e0e0;
 }
 
-.error-a {
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 1em 'Roboto';
-  font-weight: 300;
-  border: 1px solid #2f8f7f;
-  border-radius: 4px;
-  color: #2f8f7f;
-  margin: 15px 0;
-  padding: 8px 14px;
-  text-decoration: none;
-  opacity: .6;
+.page-404 .outer .middle .inner .inner-status {
+  font-size: 15px;
+
+  display: block;
+
+  margin-top: 20px;
+  margin-bottom: 5px;
+
+  text-align: center;
+
+  color: #39bbdb;
 }
 
-.text {
-  fill: none;
-  stroke-dasharray: 8% 29%;
-  stroke-width: 5px;
-  stroke-dashoffset: 1%;
-  animation: stroke-offset 5.5s infinite linear;
-  font-size: 100px;
-}
+.page-404 .outer .middle .inner .inner-detail {
+  line-height: 1.4em;
 
-.text:nth-child(1){
-  stroke: #1c234d;
-  animation-delay: -1s;
-}
+  display: block;
 
-.text:nth-child(2){
-  stroke: #315b2c;
-  animation-delay: -2s;
-}
+  margin-bottom: 10px;
 
-.text:nth-child(3){
-  stroke: #2f8f7f;
-  animation-delay: -3s;
-}
+  text-align: center;
 
-.text:nth-child(4){
-  stroke: #2f8f7f;
-  animation-delay: -4s;
+  color: #999999;
 }
-
-.text:nth-child(5){
-  stroke: #da2717;
-  animation-delay: -5s;
-}
-
-@keyframes stroke-offset{
-  100% {
-    stroke-dashoffset: -35%;
-  }
-}
-
 </style>
