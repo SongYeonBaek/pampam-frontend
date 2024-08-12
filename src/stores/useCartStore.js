@@ -34,7 +34,6 @@ export const useCartStore = defineStore("cart", {
                 });
             } catch (error) {
                 if (error.code === 1001) {
-                    console.log(error.message)
                     router.push({name: 'error', params: {errorStatus: error.response.status, message: error.response.data.message }})
                 }
             }
