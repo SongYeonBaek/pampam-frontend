@@ -17,7 +17,6 @@ export const useMemberStore = defineStore('member', {
                 token = VueJwtDecode.decode(token.split(" ")[1]);
                 this.email = token.email;
             }
-
             this.getProfileImage()
             return this.email;
         },
